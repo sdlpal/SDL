@@ -382,45 +382,43 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>8.2</ApplicationTypeRevision>
-    <TargetPlatformVersion>10.0.10069.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10069.0</TargetPlatformMinVersion>
-    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -451,31 +449,39 @@
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <TargetName>SDL2</TargetName>
+    <IntDir>$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <TargetName>SDL2</TargetName>
+    <IntDir>$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <TargetName>SDL2</TargetName>
+    <IntDir>$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <TargetName>SDL2</TargetName>
+    <IntDir>$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <TargetName>SDL2</TargetName>
+    <IntDir>$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <TargetName>SDL2</TargetName>
+    <IntDir>$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -485,10 +491,11 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalOptions>/nodefaultlib:vccorlibd /nodefaultlib:msvcrtd vccorlibd.lib msvcrtd.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>WindowsApp.lib;sdlpal.common.lib;vccorlibd.lib;msvcrtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>vccorlibd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -499,10 +506,11 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalOptions>/nodefaultlib:vccorlib /nodefaultlib:msvcrt vccorlib.lib msvcrt.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>WindowsApp.lib;sdlpal.common.lib;vccorlib.lib;msvcrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>vccorlib.lib;msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
@@ -513,10 +521,11 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalOptions>/nodefaultlib:vccorlibd /nodefaultlib:msvcrtd vccorlibd.lib msvcrtd.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>WindowsApp.lib;sdlpal.common.lib;vccorlibd.lib;msvcrtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>vccorlibd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
@@ -527,10 +536,11 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalOptions>/nodefaultlib:vccorlib /nodefaultlib:msvcrt vccorlib.lib msvcrt.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>WindowsApp.lib;sdlpal.common.lib;vccorlib.lib;msvcrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>vccorlib.lib;msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -541,10 +551,11 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalOptions>/nodefaultlib:vccorlibd /nodefaultlib:msvcrtd vccorlibd.lib msvcrtd.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>WindowsApp.lib;sdlpal.common.lib;vccorlibd.lib;msvcrtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>vccorlibd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -553,12 +564,14 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <AdditionalOptions>/nodefaultlib:vccorlib /nodefaultlib:msvcrt vccorlib.lib msvcrt.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>WindowsApp.lib;sdlpal.common.lib;vccorlib.lib;msvcrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>vccorlib.lib;msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
