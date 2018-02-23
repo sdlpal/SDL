@@ -1361,7 +1361,7 @@ Cocoa_CreateWindow(_THIS, SDL_Window * window)
         [nswindow release];
         return -1;
     }
-
+    [nswindow setColorSpace:[NSColorSpace sRGBColorSpace]];
     if (!(window->flags & SDL_WINDOW_OPENGL)) {
         return 0;
     }

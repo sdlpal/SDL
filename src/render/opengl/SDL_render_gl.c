@@ -399,18 +399,18 @@ GL_CreateRenderer(SDL_Window * window, Uint32 flags)
     SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minor);
     
     window_flags = SDL_GetWindowFlags(window);
-    if (!(window_flags & SDL_WINDOW_OPENGL) ||
-        profile_mask == SDL_GL_CONTEXT_PROFILE_ES || major != RENDERER_CONTEXT_MAJOR || minor != RENDERER_CONTEXT_MINOR) {
-
-        changed_window = SDL_TRUE;
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, 0);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, RENDERER_CONTEXT_MAJOR);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, RENDERER_CONTEXT_MINOR);
-
-        if (SDL_RecreateWindow(window, window_flags | SDL_WINDOW_OPENGL) < 0) {
-            goto error;
-        }
-    }
+//    if (!(window_flags & SDL_WINDOW_OPENGL) ||
+//        profile_mask == SDL_GL_CONTEXT_PROFILE_ES || major != RENDERER_CONTEXT_MAJOR || minor != RENDERER_CONTEXT_MINOR) {
+//
+//        changed_window = SDL_TRUE;
+//        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, 0);
+//        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, RENDERER_CONTEXT_MAJOR);
+//        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, RENDERER_CONTEXT_MINOR);
+//
+//        if (SDL_RecreateWindow(window, window_flags | SDL_WINDOW_OPENGL) < 0) {
+//            goto error;
+//        }
+//    }
 
     renderer = (SDL_Renderer *) SDL_calloc(1, sizeof(*renderer));
     if (!renderer) {
@@ -501,7 +501,7 @@ GL_CreateRenderer(SDL_Window * window, Uint32 flags)
         data->glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
     }
 
-    if (SDL_GL_ExtensionSupported("GL_ARB_texture_non_power_of_two")) {
+    if (1){//SDL_GL_ExtensionSupported("GL_ARB_texture_non_power_of_two")) {
         data->GL_ARB_texture_non_power_of_two_supported = SDL_TRUE;
     } else if (SDL_GL_ExtensionSupported("GL_ARB_texture_rectangle") ||
                SDL_GL_ExtensionSupported("GL_EXT_texture_rectangle")) {
@@ -545,7 +545,7 @@ GL_CreateRenderer(SDL_Window * window, Uint32 flags)
     renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_UYVY;
 #endif
 
-    if (SDL_GL_ExtensionSupported("GL_EXT_framebuffer_object")) {
+    if (1){//SDL_GL_ExtensionSupported("GL_EXT_framebuffer_object")) {
         data->GL_EXT_framebuffer_object_supported = SDL_TRUE;
         data->glGenFramebuffersEXT = (PFNGLGENFRAMEBUFFERSEXTPROC)
             SDL_GL_GetProcAddress("glGenFramebuffersEXT");
