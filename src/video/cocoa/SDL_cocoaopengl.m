@@ -54,11 +54,19 @@
     SDL_AtomicAdd(&self->dirty, 1);
 }
 
+bool isMojave()
+{
+    static int is_mojave = -1;
+    if( is_mojave == -1 )
+        is_mojave = [[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] && [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:( NSOperatingSystemVersion){10,14,0} ];
+    return (bool)is_mojave;
+}
+
 /* This should only be called on the thread on which a user is using the context. */
 - (void)updateIfNeeded
 {
     int value = SDL_AtomicSet(&self->dirty, 0);
-    if (value > 0) {
+    if (value > 0 || isMojave()) {
         /* We call the real underlying update here, since -[SDLOpenGLContext update] just calls us. */
         [super update];
     }
