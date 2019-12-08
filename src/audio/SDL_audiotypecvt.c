@@ -26,6 +26,7 @@
 
 #ifdef __ARM_NEON
 #define HAVE_NEON_INTRINSICS 1
+#include <arm_neon.h>
 #endif
 
 #ifdef __SSE2__
