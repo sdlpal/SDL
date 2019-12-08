@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2018 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2019 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -36,6 +36,12 @@
 
 #define DEFAULT_OPENGL  "/System/Library/Frameworks/OpenGL.framework/Libraries/libGL.dylib"
 
+/* We still support OpenGL as long as Apple offers it, deprecated or not, so disable deprecation warnings about it. */
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 @implementation SDLOpenGLContext : NSOpenGLContext
 
 - (id)initWithFormat:(NSOpenGLPixelFormat *)format
@@ -54,19 +60,11 @@
     SDL_AtomicAdd(&self->dirty, 1);
 }
 
-bool isMojave()
-{
-    static int is_mojave = -1;
-    if( is_mojave == -1 )
-        is_mojave = [[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)] && [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:( NSOperatingSystemVersion){10,14,0} ];
-    return (bool)is_mojave;
-}
-
 /* This should only be called on the thread on which a user is using the context. */
 - (void)updateIfNeeded
 {
     int value = SDL_AtomicSet(&self->dirty, 0);
-    if (value > 0 || isMojave()) {
+    if (value > 0) {
         /* We call the real underlying update here, since -[SDLOpenGLContext update] just calls us. */
         [super update];
     }
@@ -97,6 +95,18 @@ bool isMojave()
 
     if (newWindow) {
         SDL_WindowData *windowdata = (SDL_WindowData *)newWindow->driverdata;
+        NSView *contentview = windowdata->sdlContentView;
+
+        /* This should never be nil since sdlContentView is only nil if the
+           window was created via SDL_CreateWindowFrom, and SDL doesn't allow
+           OpenGL contexts to be created in that case. However, it doesn't hurt
+           to check. */
+        if (contentview == nil) {
+            /* Prefer to access the cached content view above instead of this,
+               since as of Xcode 11 + SDK 10.15, [window contentView] causes
+               Apple's Main Thread Checker to output a warning. */
+            contentview = [windowdata->nswindow contentView];
+        }
 
         /* Now sign up for scheduled updates for the new window. */
         NSMutableArray *contexts = windowdata->nscontexts;
@@ -104,8 +114,8 @@ bool isMojave()
             [contexts addObject:self];
         }
 
-        if ([self view] != [windowdata->nswindow contentView]) {
-            [self setView:[windowdata->nswindow contentView]];
+        if ([self view] != contentview) {
+            [self setView:contentview];
             if (self == [NSOpenGLContext currentContext]) {
                 [self update];
             } else {
@@ -355,10 +365,12 @@ Cocoa_GL_GetDrawableSize(_THIS, SDL_Window * window, int * w, int * h)
     NSView *contentView = [windata->nswindow contentView];
     NSRect viewport = [contentView bounds];
 
-    /* This gives us the correct viewport for a Retina-enabled view, only
-     * supported on 10.7+. */
-    if ([contentView respondsToSelector:@selector(convertRectToBacking:)]) {
-        viewport = [contentView convertRectToBacking:viewport];
+    if (window->flags & SDL_WINDOW_ALLOW_HIGHDPI) {
+        /* This gives us the correct viewport for a Retina-enabled view, only
+         * supported on 10.7+. */
+        if ([contentView respondsToSelector:@selector(convertRectToBacking:)]) {
+            viewport = [contentView convertRectToBacking:viewport];
+        }
     }
 
     if (w) {
@@ -416,8 +428,14 @@ Cocoa_GL_SwapWindow(_THIS, SDL_Window * window)
 { @autoreleasepool
 {
     SDLOpenGLContext* nscontext = (SDLOpenGLContext*)SDL_GL_GetCurrentContext();
+    SDL_VideoData *videodata = (SDL_VideoData *) _this->driverdata;
+
+    /* on 10.14 ("Mojave") and later, this deadlocks if two contexts in two
+       threads try to swap at the same time, so put a mutex around it. */
+    SDL_LockMutex(videodata->swaplock);
     [nscontext flushBuffer];
     [nscontext updateIfNeeded];
+    SDL_UnlockMutex(videodata->swaplock);
     return 0;
 }}
 
@@ -430,6 +448,11 @@ Cocoa_GL_DeleteContext(_THIS, SDL_GLContext context)
     [nscontext setWindow:NULL];
     [nscontext release];
 }}
+
+/* We still support OpenGL as long as Apple offers it, deprecated or not, so disable deprecation warnings about it. */
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
 #endif /* SDL_VIDEO_OPENGL_CGL */
 
