@@ -114,6 +114,7 @@ UIKit_CreateDevice(int devindex)
         device->GetClipboardText = UIKit_GetClipboardText;
         device->HasClipboardText = UIKit_HasClipboardText;
 
+#if !IS_CATALYST
         /* OpenGL (ES) functions */
         device->GL_MakeCurrent      = UIKit_GL_MakeCurrent;
         device->GL_GetDrawableSize  = UIKit_GL_GetDrawableSize;
@@ -122,6 +123,7 @@ UIKit_CreateDevice(int devindex)
         device->GL_DeleteContext    = UIKit_GL_DeleteContext;
         device->GL_GetProcAddress   = UIKit_GL_GetProcAddress;
         device->GL_LoadLibrary      = UIKit_GL_LoadLibrary;
+#endif
         device->free = UIKit_DeleteDevice;
 
 #if SDL_VIDEO_VULKAN

@@ -64,8 +64,10 @@ UIKit_PumpEvents(_THIS)
         result = CFRunLoopRunInMode((CFStringRef)UITrackingRunLoopMode, seconds, TRUE);
     } while(result == kCFRunLoopRunHandledSource);
 
+#if !IS_CATALYST
     /* See the comment in the function definition. */
     UIKit_GL_RestoreCurrentContext();
+#endif
 }
 
 #endif /* SDL_VIDEO_DRIVER_UIKIT */

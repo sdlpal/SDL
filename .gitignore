@@ -246,6 +246,7 @@ data
 
 *.xcscmblueprint
 xcuserdata
+*.DS_Store
 
 # Gradle files
 build/

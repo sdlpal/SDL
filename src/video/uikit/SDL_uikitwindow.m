@@ -38,7 +38,9 @@
 #import "SDL_uikitappdelegate.h"
 
 #import "SDL_uikitview.h"
+#if !TARGET_OS_MACCATALYST
 #import "SDL_uikitopenglview.h"
+#endif
 
 #include <Foundation/Foundation.h>
 
@@ -362,6 +364,7 @@ UIKit_GetWindowWMInfo(_THIS, SDL_Window * window, SDL_SysWMinfo * info)
             info->subsystem = SDL_SYSWM_UIKIT;
             info->info.uikit.window = data.uiwindow;
 
+#if !IS_CATALYST
             /* These struct members were added in SDL 2.0.4. */
             if (versionnum >= SDL_VERSIONNUM(2,0,4)) {
                 if ([data.viewcontroller.view isKindOfClass:[SDL_uikitopenglview class]]) {
@@ -370,6 +373,10 @@ UIKit_GetWindowWMInfo(_THIS, SDL_Window * window, SDL_SysWMinfo * info)
                     info->info.uikit.colorbuffer = glview.drawableRenderbuffer;
                     info->info.uikit.resolveFramebuffer = glview.msaaResolveFramebuffer;
                 } else {
+#else
+            {
+                {
+#endif
                     info->info.uikit.framebuffer = 0;
                     info->info.uikit.colorbuffer = 0;
                     info->info.uikit.resolveFramebuffer = 0;

@@ -36,7 +36,11 @@
 #elif defined(__MACOSX__)
 #include "SDL_config_macosx.h"
 #elif defined(__IPHONEOS__)
+#ifdef TARGET_OS_MACCATALYST
+#include "SDL_config_catalyst.h"
+#else
 #include "SDL_config_iphoneos.h"
+#endif
 #elif defined(__ANDROID__)
 #include "SDL_config_android.h"
 #elif defined(__PSP__)

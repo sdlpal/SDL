@@ -41,13 +41,19 @@
 #ifdef __MACOSX__
 #include "SDL_shaders_metal_osx.h"
 #else
+#if TARGET_OS_MACCATALYST
+// Catalyst NEED recompile msl with build-metal-shaders-catalyst.sh
+#include "SDL_shaders_metal_catalyst.h"
+#else
 #include "SDL_shaders_metal_ios.h"
+#endif
 #endif
 
 /* Apple Metal renderer implementation */
 
 /* macOS requires constants in a buffer to have a 256 byte alignment. */
-#ifdef __MACOSX__
+/* macCatalyst seems follow ordinary macOS. */
+#if defined(__MACOSX__) || TARGET_OS_MACCATALYST
 #define CONSTANT_ALIGN 256
 #else
 #define CONSTANT_ALIGN 4
@@ -1544,6 +1550,9 @@ METAL_CreateRenderer(SDL_Window * window, Uint32 flags)
 #else
     UIView *view = UIKit_Mtl_AddMetalView(window);
     CAMetalLayer *layer = (CAMetalLayer *)[view layer];
+    // SDL BUG: leaving layer built-in mtldevice instead of manual created one.
+    // Apple document explicitly adviced ch
+    [layer setDevice:mtldevice];
 #endif
 
     // Necessary for RenderReadPixels.
@@ -1732,6 +1741,9 @@ METAL_CreateRenderer(SDL_Window * window, Uint32 flags)
     }
 #endif
 #else
+#if TARGET_OS_MACCATALYST
+    maxtexsize = 16384;
+#else
 #ifdef __IPHONE_11_0
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
@@ -1750,6 +1762,7 @@ METAL_CreateRenderer(SDL_Window * window, Uint32 flags)
     } else {
         maxtexsize = 4096;
     }
+#endif
 #endif
 
     renderer->info.max_texture_width = maxtexsize;
