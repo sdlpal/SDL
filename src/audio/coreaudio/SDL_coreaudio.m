@@ -1043,8 +1043,8 @@ COREAUDIO_OpenDevice(_THIS, void *handle, const char *devname, int iscapture)
     /* Stop CoreAudio from doing expensive audio rate conversion */
     @autoreleasepool {
         AVAudioSession* session = [AVAudioSession sharedInstance];
-        [session setPreferredSampleRate:this->spec.freq error:nil];
-        this->spec.freq = (int)session.sampleRate;
+        if( ![session setPreferredSampleRate:this->spec.freq error:nil] )
+            this->spec.freq = (int)session.sampleRate;
 #if TARGET_OS_TV
         if (iscapture) {
             [session setPreferredInputNumberOfChannels:this->spec.channels error:nil];
