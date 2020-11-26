@@ -24,6 +24,10 @@
 #include "../core/windows/SDL_windows.h"
 #endif
 
+#if defined(__MACOSX__)  /* !!! FIXME: should we favor gcc atomics? */
+#include <libkern/OSAtomic.h>
+#endif
+
 #include "SDL_atomic.h"
 #include "SDL_mutex.h"
 #include "SDL_timer.h"
