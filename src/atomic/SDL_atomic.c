@@ -31,6 +31,10 @@
 #include <libkern/OSAtomic.h>
 #endif
 
+#if __STDC_VERSION__ >= 201112L && !defined(__STDC_NO_ATOMICS__)
+#include <stdatomic.h>
+#endif
+
 #if !defined(HAVE_GCC_ATOMICS) && defined(__SOLARIS__)
 #include <atomic.h>
 #endif
@@ -135,6 +139,8 @@ SDL_AtomicCAS(SDL_atomic_t *a, int oldval, int newval)
     return (SDL_bool) _SDL_cmpxchg_watcom(&a->value, newval, oldval);
 #elif defined(HAVE_GCC_ATOMICS)
     return (SDL_bool) __sync_bool_compare_and_swap(&a->value, oldval, newval);
+#elif __STDC_VERSION__ >= 201112L && !defined(__STDC_NO_ATOMICS__)
+    return atomic_compare_exchange_strong((_Atomic(int)*)(&a->value), &oldval, newval);
 #elif defined(__MACOSX__)  /* this is deprecated in 10.12 sdk; favor gcc atomics. */
     return (SDL_bool) OSAtomicCompareAndSwap32Barrier(oldval, newval, &a->value);
 #elif defined(__SOLARIS__) && defined(_LP64)

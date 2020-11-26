@@ -28,6 +28,10 @@
 #include <libkern/OSAtomic.h>
 #endif
 
+#if __STDC_VERSION__ >= 201112L && !defined(__STDC_NO_ATOMICS__)
+#include <stdatomic.h>
+#endif
+
 #include "SDL_atomic.h"
 #include "SDL_mutex.h"
 #include "SDL_timer.h"
@@ -97,6 +101,11 @@ SDL_AtomicTryLock(SDL_SpinLock *lock)
     __asm__ __volatile__ (
         "ldrex %0, [%2]\nteq   %0, #0\nstrexeq %0, %1, [%2]"
         : "=&r" (result) : "r" (1), "r" (lock) : "cc", "memory");
+    return (result == 0);
+
+#elif __STDC_VERSION__ >= 201112L && !defined(__STDC_NO_ATOMICS__)
+    int result;
+    atomic_compare_exchange_strong((_Atomic(SDL_SpinLock)*)(lock), &result, 1);
     return (result == 0);
 
 #elif defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
