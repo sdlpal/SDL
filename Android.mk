@@ -33,7 +33,12 @@ LOCAL_SRC_FILES := \
 	$(wildcard $(LOCAL_PATH)/src/joystick/*.c) \
 	$(wildcard $(LOCAL_PATH)/src/joystick/android/*.c) \
 	$(wildcard $(LOCAL_PATH)/src/joystick/hidapi/*.c) \
+	$(wildcard $(LOCAL_PATH)/src/joystick/virtual/*.c) \
 	$(wildcard $(LOCAL_PATH)/src/loadso/dlopen/*.c) \
+	$(wildcard $(LOCAL_PATH)/src/locale/*.c) \
+	$(wildcard $(LOCAL_PATH)/src/locale/android/*.c) \
+	$(wildcard $(LOCAL_PATH)/src/misc/*.c) \
+	$(wildcard $(LOCAL_PATH)/src/misc/android/*.c) \
 	$(wildcard $(LOCAL_PATH)/src/power/*.c) \
 	$(wildcard $(LOCAL_PATH)/src/power/android/*.c) \
 	$(wildcard $(LOCAL_PATH)/src/filesystem/android/*.c) \
@@ -49,7 +54,7 @@ LOCAL_SRC_FILES := \
 	$(wildcard $(LOCAL_PATH)/src/video/*.c) \
 	$(wildcard $(LOCAL_PATH)/src/video/android/*.c) \
 	$(wildcard $(LOCAL_PATH)/src/video/yuv2rgb/*.c) \
-	)
+	$(wildcard $(LOCAL_PATH)/src/test/*.c))
 
 LOCAL_SHARED_LIBRARIES := hidapi
 
@@ -64,7 +69,11 @@ LOCAL_CFLAGS += \
 	-Wmissing-variable-declarations \
 	-Wfloat-conversion \
 	-Wshorten-64-to-32 \
-	-Wunreachable-code-return
+	-Wunreachable-code-return \
+	-Wshift-sign-overflow \
+	-Wstrict-prototypes \
+	-Wkeyword-macro \
+
 
 # Warnings we haven't fixed (yet)
 LOCAL_CFLAGS += -Wno-unused-parameter -Wno-sign-compare
