@@ -505,7 +505,7 @@ GL_CreateTexture(SDL_Renderer * renderer, SDL_Texture * texture)
     }
     texture->driverdata = data;
 
-    if (renderdata->GL_ARB_texture_non_power_of_two_supported) {
+    if (1) {//renderdata->GL_ARB_texture_non_power_of_two_supported) {
         texture_w = texture->w;
         texture_h = texture->h;
         data->texw = 1.0f;
@@ -1712,7 +1712,7 @@ GL_CreateRenderer(SDL_Window * window, Uint32 flags)
     renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_UYVY;
 #endif
 
-    if (SDL_GL_ExtensionSupported("GL_EXT_framebuffer_object")) {
+    if (1) {//SDL_GL_ExtensionSupported("GL_EXT_framebuffer_object")) {
         data->GL_EXT_framebuffer_object_supported = SDL_TRUE;
         data->glGenFramebuffersEXT = (PFNGLGENFRAMEBUFFERSEXTPROC)
             SDL_GL_GetProcAddress("glGenFramebuffersEXT");
