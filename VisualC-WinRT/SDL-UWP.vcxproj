@@ -2,7 +2,15 @@
 
 
 
+
+
+
+
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+
+
+
 
 
 
@@ -10,11 +18,23 @@
 
 
 
+
+
+
+
     <ProjectConfiguration Include="Debug|ARM">
 
 
 
+
+
+
+
       <Configuration>Debug</Configuration>
+
+
+
+
 
 
 
@@ -22,21 +42,43 @@
 
 
 
+
+
+
+
     </ProjectConfiguration>
+
+
 
     <ProjectConfiguration Include="Debug|ARM64">
 
+
+
       <Configuration>Debug</Configuration>
+
+
 
       <Platform>ARM64</Platform>
 
+
+
     </ProjectConfiguration>
+
+
 
     <ProjectConfiguration Include="Debug|Win32">
 
 
 
+
+
+
+
       <Configuration>Debug</Configuration>
+
+
+
+
 
 
 
@@ -44,7 +86,15 @@
 
 
 
+
+
+
+
     </ProjectConfiguration>
+
+
+
+
 
 
 
@@ -52,7 +102,15 @@
 
 
 
+
+
+
+
       <Configuration>Debug</Configuration>
+
+
+
+
 
 
 
@@ -60,7 +118,15 @@
 
 
 
+
+
+
+
     </ProjectConfiguration>
+
+
+
+
 
 
 
@@ -68,7 +134,15 @@
 
 
 
+
+
+
+
       <Configuration>Release</Configuration>
+
+
+
+
 
 
 
@@ -76,21 +150,43 @@
 
 
 
+
+
+
+
     </ProjectConfiguration>
+
+
 
     <ProjectConfiguration Include="Release|ARM64">
 
+
+
       <Configuration>Release</Configuration>
+
+
 
       <Platform>ARM64</Platform>
 
+
+
     </ProjectConfiguration>
+
+
 
     <ProjectConfiguration Include="Release|Win32">
 
 
 
+
+
+
+
       <Configuration>Release</Configuration>
+
+
+
+
 
 
 
@@ -98,7 +194,15 @@
 
 
 
+
+
+
+
     </ProjectConfiguration>
+
+
+
+
 
 
 
@@ -106,7 +210,15 @@
 
 
 
+
+
+
+
       <Configuration>Release</Configuration>
+
+
+
+
 
 
 
@@ -114,7 +226,15 @@
 
 
 
+
+
+
+
     </ProjectConfiguration>
+
+
+
+
 
 
 
@@ -122,7 +242,15 @@
 
 
 
+
+
+
+
   <ItemGroup>
+
+
+
+
 
 
 
@@ -130,7 +258,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\close_code.h" />
+
+
+
+
 
 
 
@@ -138,7 +274,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_assert.h" />
+
+
+
+
 
 
 
@@ -146,7 +290,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_audio.h" />
+
+
+
+
 
 
 
@@ -154,7 +306,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_clipboard.h" />
+
+
+
+
 
 
 
@@ -162,7 +322,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_config_minimal.h" />
+
+
+
+
 
 
 
@@ -170,7 +338,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_copying.h" />
+
+
+
+
 
 
 
@@ -178,7 +354,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_egl.h" />
+
+
+
+
 
 
 
@@ -186,7 +370,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_error.h" />
+
+
+
+
 
 
 
@@ -194,7 +386,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_filesystem.h" />
+
+
+
+
 
 
 
@@ -202,7 +402,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_hints.h" />
+
+
+
+
 
 
 
@@ -210,7 +418,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_input.h" />
+
+
+
+
 
 
 
@@ -218,7 +434,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_keyboard.h" />
+
+
+
+
 
 
 
@@ -226,7 +450,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_loadso.h" />
+
+
+
+
 
 
 
@@ -234,7 +466,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_log.h" />
+
+
+
+
 
 
 
@@ -242,7 +482,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_misc.h" />
+
+
+
+
 
 
 
@@ -250,7 +498,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_mutex.h" />
+
+
+
+
 
 
 
@@ -258,7 +514,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_opengles2.h" />
+
+
+
+
 
 
 
@@ -266,7 +530,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_platform.h" />
+
+
+
+
 
 
 
@@ -274,7 +546,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_quit.h" />
+
+
+
+
 
 
 
@@ -282,7 +562,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_render.h" />
+
+
+
+
 
 
 
@@ -290,7 +578,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_rwops.h" />
+
+
+
+
 
 
 
@@ -298,7 +594,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_sensor.h" />
+
+
+
+
 
 
 
@@ -306,7 +610,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_stdinc.h" />
+
+
+
+
 
 
 
@@ -314,7 +626,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_system.h" />
+
+
+
+
 
 
 
@@ -322,7 +642,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_thread.h" />
+
+
+
+
 
 
 
@@ -330,7 +658,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_touch.h" />
+
+
+
+
 
 
 
@@ -338,7 +674,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\include\SDL_version.h" />
+
+
+
+
 
 
 
@@ -346,7 +690,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\audio\disk\SDL_diskaudio.h" />
+
+
+
+
 
 
 
@@ -354,7 +706,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\audio\SDL_audiodev_c.h" />
+
+
+
+
 
 
 
@@ -362,7 +722,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\audio\SDL_sysaudio.h" />
+
+
+
+
 
 
 
@@ -370,7 +738,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\audio\wasapi\SDL_wasapi.h" />
+
+
+
+
 
 
 
@@ -378,7 +754,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\core\windows\SDL_windows.h" />
+
+
+
+
 
 
 
@@ -386,7 +770,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\core\winrt\SDL_winrtapp_common.h" />
+
+
+
+
 
 
 
@@ -394,7 +786,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\core\winrt\SDL_winrtapp_xaml.h" />
+
+
+
+
 
 
 
@@ -402,7 +802,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\dynapi\SDL_dynapi_overrides.h" />
+
+
+
+
 
 
 
@@ -410,7 +818,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\events\blank_cursor.h" />
+
+
+
+
 
 
 
@@ -418,7 +834,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\events\SDL_clipboardevents_c.h" />
+
+
+
+
 
 
 
@@ -426,7 +850,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\events\SDL_dropevents_c.h" />
+
+
+
+
 
 
 
@@ -434,7 +866,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\events\SDL_keyboard_c.h" />
+
+
+
+
 
 
 
@@ -442,7 +882,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\events\SDL_sysevents.h" />
+
+
+
+
 
 
 
@@ -450,7 +898,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\events\SDL_windowevents_c.h" />
+
+
+
+
 
 
 
@@ -458,7 +914,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\haptic\SDL_syshaptic.h" />
+
+
+
+
 
 
 
@@ -466,7 +930,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\haptic\windows\SDL_windowshaptic_c.h" />
+
+
+
+
 
 
 
@@ -474,7 +946,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\joystick\SDL_gamecontrollerdb.h" />
+
+
+
+
 
 
 
@@ -482,7 +962,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\joystick\SDL_sysjoystick.h" />
+
+
+
+
 
 
 
@@ -490,7 +978,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\joystick\windows\SDL_dinputjoystick_c.h" />
+
+
+
+
 
 
 
@@ -498,7 +994,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\joystick\windows\SDL_xinputjoystick_c.h" />
+
+
+
+
 
 
 
@@ -506,7 +1010,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\render\direct3d11\SDL_render_winrt.h" />
+
+
+
+
 
 
 
@@ -514,7 +1026,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\render\opengles2\SDL_gles2funcs.h" />
+
+
+
+
 
 
 
@@ -522,7 +1042,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\render\SDL_d3dmath.h" />
+
+
+
+
 
 
 
@@ -530,7 +1058,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\render\SDL_yuv_sw_c.h" />
+
+
+
+
 
 
 
@@ -538,7 +1074,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\render\software\SDL_blendline.h" />
+
+
+
+
 
 
 
@@ -546,7 +1090,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\render\software\SDL_draw.h" />
+
+
+
+
 
 
 
@@ -554,7 +1106,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\render\software\SDL_drawpoint.h" />
+
+
+
+
 
 
 
@@ -562,7 +1122,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\render\software\SDL_rotate.h" />
+
+
+
+
 
 
 
@@ -570,7 +1138,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\SDL_assert_c.h" />
+
+
+
+
 
 
 
@@ -578,7 +1154,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\SDL_error_c.h" />
+
+
+
+
 
 
 
@@ -586,7 +1170,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\SDL_hints_c.h" />
+
+
+
+
 
 
 
@@ -594,7 +1186,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\SDL_list.h" />
+
+
+
+
 
 
 
@@ -602,7 +1202,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\sensor\SDL_sensor_c.h" />
+
+
+
+
 
 
 
@@ -610,7 +1218,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\thread\SDL_systhread.h" />
+
+
+
+
 
 
 
@@ -618,7 +1234,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\thread\stdcpp\SDL_sysmutex_c.h" />
+
+
+
+
 
 
 
@@ -626,7 +1250,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\timer\SDL_timer_c.h" />
+
+
+
+
 
 
 
@@ -634,7 +1266,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\video\dummy\SDL_nullframebuffer_c.h" />
+
+
+
+
 
 
 
@@ -642,7 +1282,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\video\SDL_blit.h" />
+
+
+
+
 
 
 
@@ -650,7 +1298,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\video\SDL_blit_copy.h" />
+
+
+
+
 
 
 
@@ -658,7 +1314,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\video\SDL_egl_c.h" />
+
+
+
+
 
 
 
@@ -666,7 +1330,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\video\SDL_rect_c.h" />
+
+
+
+
 
 
 
@@ -674,7 +1346,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\video\SDL_shape_internals.h" />
+
+
+
+
 
 
 
@@ -682,7 +1362,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\video\SDL_yuv_c.h" />
+
+
+
+
 
 
 
@@ -690,7 +1378,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\video\winrt\SDL_winrtgamebar_cpp.h" />
+
+
+
+
 
 
 
@@ -698,7 +1394,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\video\winrt\SDL_winrtmouse_c.h" />
+
+
+
+
 
 
 
@@ -706,7 +1410,15 @@
 
 
 
+
+
+
+
     <ClInclude Include="..\src\video\winrt\SDL_winrtvideo_cpp.h" />
+
+
+
+
 
 
 
@@ -714,7 +1426,15 @@
 
 
 
+
+
+
+
   </ItemGroup>
+
+
+
+
 
 
 
@@ -722,7 +1442,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\atomic\SDL_atomic.c" />
+
+
+
+
 
 
 
@@ -730,7 +1458,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\audio\disk\SDL_diskaudio.c" />
+
+
+
+
 
 
 
@@ -738,7 +1474,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\audio\SDL_audio.c" />
+
+
+
+
 
 
 
@@ -746,7 +1490,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\audio\SDL_audiodev.c" />
+
+
+
+
 
 
 
@@ -754,7 +1506,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\audio\SDL_mixer.c" />
+
+
+
+
 
 
 
@@ -762,7 +1522,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\audio\wasapi\SDL_wasapi.c" />
+
+
+
+
 
 
 
@@ -770,7 +1538,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -778,11 +1554,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -790,11 +1578,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -802,7 +1602,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\core\windows\SDL_xinput.c" />
+
+
+
+
 
 
 
@@ -810,7 +1618,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -818,11 +1634,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -830,11 +1658,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -842,7 +1682,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -850,11 +1698,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -862,11 +1722,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -874,7 +1746,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -882,11 +1762,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -894,11 +1786,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -906,7 +1810,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\dynapi\SDL_dynapi.c" />
+
+
+
+
 
 
 
@@ -914,7 +1826,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\events\SDL_displayevents.c" />
+
+
+
+
 
 
 
@@ -922,7 +1842,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\events\SDL_events.c" />
+
+
+
+
 
 
 
@@ -930,7 +1858,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\events\SDL_keyboard.c" />
+
+
+
+
 
 
 
@@ -938,7 +1874,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\events\SDL_quit.c" />
+
+
+
+
 
 
 
@@ -946,7 +1890,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\events\SDL_windowevents.c" />
+
+
+
+
 
 
 
@@ -954,7 +1906,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -962,11 +1922,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -974,11 +1946,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -986,7 +1970,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\haptic\dummy\SDL_syshaptic.c" />
+
+
+
+
 
 
 
@@ -994,7 +1986,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\haptic\windows\SDL_dinputhaptic.c" />
+
+
+
+
 
 
 
@@ -1002,7 +2002,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\haptic\windows\SDL_xinputhaptic.c" />
+
+
+
+
 
 
 
@@ -1010,7 +2018,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\joystick\dummy\SDL_sysjoystick.c" />
+
+
+
+
 
 
 
@@ -1018,7 +2034,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\joystick\SDL_joystick.c" />
+
+
+
+
 
 
 
@@ -1026,7 +2050,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\joystick\windows\SDL_dinputjoystick.c" />
+
+
+
+
 
 
 
@@ -1034,7 +2066,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\joystick\windows\SDL_windows_gaming_input.c" />
+
+
+
+
 
 
 
@@ -1042,7 +2082,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\loadso\windows\SDL_sysloadso.c" />
+
+
+
+
 
 
 
@@ -1050,7 +2098,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\locale\winrt\SDL_syslocale.c" />
+
+
+
+
 
 
 
@@ -1058,7 +2114,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\misc\winrt\SDL_sysurl.cpp">
+
+
+
+
 
 
 
@@ -1066,15 +2130,31 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</CompileAsWinRT>
+
+
+
+
 
 
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1082,11 +2162,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -1094,7 +2186,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\power\winrt\SDL_syspower.cpp" />
+
+
+
+
 
 
 
@@ -1102,7 +2202,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\render\direct3d11\SDL_render_winrt.cpp">
+
+
+
+
 
 
 
@@ -1110,15 +2218,31 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</CompileAsWinRT>
+
+
+
+
 
 
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1126,11 +2250,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -1138,7 +2274,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\render\opengles2\SDL_render_gles2.c" />
+
+
+
+
 
 
 
@@ -1146,7 +2290,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\render\SDL_d3dmath.c" />
+
+
+
+
 
 
 
@@ -1154,7 +2306,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\render\SDL_yuv_sw.c" />
+
+
+
+
 
 
 
@@ -1162,7 +2322,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\render\software\SDL_blendline.c" />
+
+
+
+
 
 
 
@@ -1170,7 +2338,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\render\software\SDL_drawline.c" />
+
+
+
+
 
 
 
@@ -1178,7 +2354,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\render\software\SDL_render_sw.c" />
+
+
+
+
 
 
 
@@ -1186,7 +2370,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\render\software\SDL_triangle.c" />
+
+
+
+
 
 
 
@@ -1194,7 +2386,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\SDL_assert.c" />
+
+
+
+
 
 
 
@@ -1202,7 +2402,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\SDL_list.c" />
+
+
+
+
 
 
 
@@ -1210,7 +2418,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\SDL_hints.c" />
+
+
+
+
 
 
 
@@ -1218,7 +2434,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\sensor\dummy\SDL_dummysensor.c" />
+
+
+
+
 
 
 
@@ -1226,7 +2450,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\stdlib\SDL_crc32.c" />
+
+
+
+
 
 
 
@@ -1234,7 +2466,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\stdlib\SDL_iconv.c" />
+
+
+
+
 
 
 
@@ -1242,7 +2482,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\stdlib\SDL_qsort.c" />
+
+
+
+
 
 
 
@@ -1250,7 +2498,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\stdlib\SDL_string.c" />
+
+
+
+
 
 
 
@@ -1258,7 +2514,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\thread\generic\SDL_syssem.c" />
+
+
+
+
 
 
 
@@ -1266,7 +2530,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\thread\stdcpp\SDL_syscond.cpp" />
+
+
+
+
 
 
 
@@ -1274,7 +2546,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\thread\stdcpp\SDL_systhread.cpp" />
+
+
+
+
 
 
 
@@ -1282,7 +2562,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\timer\windows\SDL_systimer.c" />
+
+
+
+
 
 
 
@@ -1290,7 +2578,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\video\dummy\SDL_nullframebuffer.c" />
+
+
+
+
 
 
 
@@ -1298,7 +2594,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\video\SDL_blit.c" />
+
+
+
+
 
 
 
@@ -1306,7 +2610,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\video\SDL_blit_1.c" />
+
+
+
+
 
 
 
@@ -1314,7 +2626,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\video\SDL_blit_auto.c" />
+
+
+
+
 
 
 
@@ -1322,7 +2642,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\video\SDL_blit_N.c" />
+
+
+
+
 
 
 
@@ -1330,7 +2658,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\video\SDL_bmp.c" />
+
+
+
+
 
 
 
@@ -1338,7 +2674,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\video\SDL_egl.c" />
+
+
+
+
 
 
 
@@ -1346,7 +2690,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\video\SDL_pixels.c" />
+
+
+
+
 
 
 
@@ -1354,7 +2706,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\video\SDL_RLEaccel.c" />
+
+
+
+
 
 
 
@@ -1362,7 +2722,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\video\SDL_stretch.c" />
+
+
+
+
 
 
 
@@ -1370,7 +2738,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\video\SDL_video.c" />
+
+
+
+
 
 
 
@@ -1378,7 +2754,15 @@
 
 
 
+
+
+
+
     <ClCompile Include="..\src\video\winrt\SDL_winrtevents.cpp">
+
+
+
+
 
 
 
@@ -1386,15 +2770,31 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</CompileAsWinRT>
+
+
+
+
 
 
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1402,11 +2802,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -1414,7 +2826,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1422,7 +2842,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1430,15 +2858,31 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -1446,7 +2890,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1454,11 +2906,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1466,11 +2930,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -1478,7 +2954,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1486,11 +2970,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1498,11 +2994,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -1510,7 +3018,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1518,11 +3034,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1530,11 +3058,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -1542,7 +3082,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1550,11 +3098,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1562,11 +3122,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -1574,7 +3146,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1582,11 +3162,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1594,11 +3186,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -1606,7 +3210,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1614,11 +3226,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</CompileAsWinRT>
 
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -1626,11 +3250,23 @@
 
 
 
+
+
+
+
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsWinRT>
+
+
 
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</CompileAsWinRT>
 
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -1638,7 +3274,15 @@
 
 
 
+
+
+
+
   </ItemGroup>
+
+
+
+
 
 
 
@@ -1646,7 +3290,15 @@
 
 
 
+
+
+
+
     <ProjectGuid>{89e9b32e-a86a-47c3-a948-d2b1622925ce}</ProjectGuid>
+
+
+
+
 
 
 
@@ -1654,7 +3306,15 @@
 
 
 
+
+
+
+
     <ProjectName>SDL2-UWP</ProjectName>
+
+
+
+
 
 
 
@@ -1662,7 +3322,15 @@
 
 
 
+
+
+
+
     <DefaultLanguage>en-US</DefaultLanguage>
+
+
+
+
 
 
 
@@ -1670,7 +3338,15 @@
 
 
 
+
+
+
+
     <AppContainerApplication>true</AppContainerApplication>
+
+
+
+
 
 
 
@@ -1678,7 +3354,15 @@
 
 
 
+
+
+
+
     <ApplicationTypeRevision>8.2</ApplicationTypeRevision>
+
+
+
+
 
 
 
@@ -1686,7 +3370,15 @@
 
 
 
+
+
+
+
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+
+
+
+
 
 
 
@@ -1694,11 +3386,23 @@
 
 
 
+
+
+
+
     <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
 
 
 
+
+
+
+
   </PropertyGroup>
+
+
+
+
 
 
 
@@ -1706,7 +3410,15 @@
 
 
 
+
+
+
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+
+
+
+
 
 
 
@@ -1714,7 +3426,15 @@
 
 
 
+
+
+
+
     <UseDebugLibraries>true</UseDebugLibraries>
+
+
+
+
 
 
 
@@ -1722,7 +3442,15 @@
 
 
 
+
+
+
+
   </PropertyGroup>
+
+
+
+
 
 
 
@@ -1730,7 +3458,15 @@
 
 
 
+
+
+
+
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+
+
+
+
 
 
 
@@ -1738,11 +3474,23 @@
 
 
 
+
+
+
+
     <PlatformToolset>v142</PlatformToolset>
 
 
 
+
+
+
+
   </PropertyGroup>
+
+
+
+
 
 
 
@@ -1750,7 +3498,15 @@
 
 
 
+
+
+
+
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+
+
+
+
 
 
 
@@ -1758,27 +3514,55 @@
 
 
 
+
+
+
+
     <PlatformToolset>v142</PlatformToolset>
 
 
 
+
+
+
+
   </PropertyGroup>
+
+
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
 
+
+
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+
+
 
     <UseDebugLibraries>true</UseDebugLibraries>
 
+
+
     <PlatformToolset>v142</PlatformToolset>
 
+
+
   </PropertyGroup>
+
+
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
 
 
 
+
+
+
+
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+
+
+
+
 
 
 
@@ -1786,7 +3570,15 @@
 
 
 
+
+
+
+
     <WholeProgramOptimization>true</WholeProgramOptimization>
+
+
+
+
 
 
 
@@ -1794,7 +3586,15 @@
 
 
 
+
+
+
+
   </PropertyGroup>
+
+
+
+
 
 
 
@@ -1802,7 +3602,15 @@
 
 
 
+
+
+
+
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+
+
+
+
 
 
 
@@ -1810,7 +3618,15 @@
 
 
 
+
+
+
+
     <WholeProgramOptimization>true</WholeProgramOptimization>
+
+
+
+
 
 
 
@@ -1818,7 +3634,15 @@
 
 
 
+
+
+
+
   </PropertyGroup>
+
+
+
+
 
 
 
@@ -1826,7 +3650,15 @@
 
 
 
+
+
+
+
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+
+
+
+
 
 
 
@@ -1834,7 +3666,15 @@
 
 
 
+
+
+
+
     <WholeProgramOptimization>true</WholeProgramOptimization>
+
+
+
+
 
 
 
@@ -1842,21 +3682,43 @@
 
 
 
+
+
+
+
   </PropertyGroup>
+
+
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
 
+
+
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+
+
 
     <UseDebugLibraries>false</UseDebugLibraries>
 
+
+
     <WholeProgramOptimization>true</WholeProgramOptimization>
+
+
 
     <PlatformToolset>v142</PlatformToolset>
 
+
+
   </PropertyGroup>
 
+
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+
+
+
+
 
 
 
@@ -1864,7 +3726,15 @@
 
 
 
+
+
+
+
   </ImportGroup>
+
+
+
+
 
 
 
@@ -1872,7 +3742,15 @@
 
 
 
+
+
+
+
   </ImportGroup>
+
+
+
+
 
 
 
@@ -1880,11 +3758,23 @@
 
 
 
+
+
+
+
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
 
 
 
+
+
+
+
   </ImportGroup>
+
+
+
+
 
 
 
@@ -1892,11 +3782,23 @@
 
 
 
+
+
+
+
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
 
 
 
+
+
+
+
   </ImportGroup>
+
+
+
+
 
 
 
@@ -1904,11 +3806,23 @@
 
 
 
+
+
+
+
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
 
 
 
+
+
+
+
   </ImportGroup>
+
+
+
+
 
 
 
@@ -1916,11 +3830,23 @@
 
 
 
+
+
+
+
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
 
 
 
+
+
+
+
   </ImportGroup>
+
+
+
+
 
 
 
@@ -1928,35 +3854,71 @@
 
 
 
+
+
+
+
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
 
 
 
+
+
+
+
   </ImportGroup>
+
+
 
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="PropertySheets">
 
+
+
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
 
+
+
   </ImportGroup>
+
+
 
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
 
 
 
+
+
+
+
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
 
 
 
+
+
+
+
   </ImportGroup>
+
+
 
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="PropertySheets">
 
+
+
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+
+
 
   </ImportGroup>
 
+
+
   <PropertyGroup Label="UserMacros" />
+
+
+
+
 
 
 
@@ -1964,7 +3926,15 @@
 
 
 
+
+
+
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+
+
+
+
 
 
 
@@ -1972,7 +3942,15 @@
 
 
 
+
+
+
+
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
+
+
+
+
 
 
 
@@ -1980,7 +3958,15 @@
 
 
 
+
+
+
+
   </PropertyGroup>
+
+
+
+
 
 
 
@@ -1988,7 +3974,15 @@
 
 
 
+
+
+
+
     <GenerateManifest>false</GenerateManifest>
+
+
+
+
 
 
 
@@ -1996,11 +3990,23 @@
 
 
 
+
+
+
+
     <TargetName>SDL2</TargetName>
 
 
 
+
+
+
+
   </PropertyGroup>
+
+
+
+
 
 
 
@@ -2008,7 +4014,15 @@
 
 
 
+
+
+
+
     <GenerateManifest>false</GenerateManifest>
+
+
+
+
 
 
 
@@ -2016,11 +4030,23 @@
 
 
 
+
+
+
+
     <TargetName>SDL2</TargetName>
 
 
 
+
+
+
+
   </PropertyGroup>
+
+
+
+
 
 
 
@@ -2028,7 +4054,15 @@
 
 
 
+
+
+
+
     <GenerateManifest>false</GenerateManifest>
+
+
+
+
 
 
 
@@ -2036,11 +4070,23 @@
 
 
 
+
+
+
+
     <TargetName>SDL2</TargetName>
 
 
 
+
+
+
+
   </PropertyGroup>
+
+
+
+
 
 
 
@@ -2048,7 +4094,15 @@
 
 
 
+
+
+
+
     <GenerateManifest>false</GenerateManifest>
+
+
+
+
 
 
 
@@ -2056,27 +4110,55 @@
 
 
 
+
+
+
+
     <TargetName>SDL2</TargetName>
 
 
 
+
+
+
+
   </PropertyGroup>
+
+
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
 
+
+
     <GenerateManifest>false</GenerateManifest>
+
+
 
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
 
+
+
     <TargetName>SDL2</TargetName>
 
+
+
   </PropertyGroup>
+
+
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
 
 
 
+
+
+
+
     <GenerateManifest>false</GenerateManifest>
+
+
+
+
 
 
 
@@ -2084,23 +4166,47 @@
 
 
 
+
+
+
+
     <TargetName>SDL2</TargetName>
 
 
 
+
+
+
+
   </PropertyGroup>
+
+
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
 
+
+
     <GenerateManifest>false</GenerateManifest>
+
+
 
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
 
+
+
     <TargetName>SDL2</TargetName>
+
+
 
   </PropertyGroup>
 
+
+
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+
+
+
+
 
 
 
@@ -2108,7 +4214,15 @@
 
 
 
+
+
+
+
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+
+
+
+
 
 
 
@@ -2116,7 +4230,15 @@
 
 
 
+
+
+
+
       <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
+
+
+
 
 
 
@@ -2124,7 +4246,15 @@
 
 
 
+
+
+
+
     </ClCompile>
+
+
+
+
 
 
 
@@ -2132,7 +4262,15 @@
 
 
 
+
+
+
+
       <SubSystem>Console</SubSystem>
+
+
+
+
 
 
 
@@ -2140,11 +4278,21 @@
 
 
 
+
+
+
+
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
 
+      <IgnoreSpecificDefaultLibraries>vccorlibd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+
+      <AdditionalDependencies>sdlpal.common.lib;vccorlibd.lib;msvcrtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
 
 
-      <AdditionalOptions>/nodefaultlib:vccorlibd /nodefaultlib:msvcrtd vccorlibd.lib msvcrtd.lib %(AdditionalOptions)</AdditionalOptions>
+
+
 
 
 
@@ -2152,7 +4300,15 @@
 
 
 
+
+
+
+
   </ItemDefinitionGroup>
+
+
+
+
 
 
 
@@ -2160,7 +4316,15 @@
 
 
 
+
+
+
+
     <ClCompile>
+
+
+
+
 
 
 
@@ -2168,7 +4332,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT>false</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -2176,7 +4348,15 @@
 
 
 
+
+
+
+
       <PreprocessorDefinitions>DLL_EXPORT;_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+
+
+
 
 
 
@@ -2184,7 +4364,15 @@
 
 
 
+
+
+
+
     <Link>
+
+
+
+
 
 
 
@@ -2192,15 +4380,31 @@
 
 
 
+
+
+
+
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+
+
+
+
 
 
 
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
 
+      <IgnoreSpecificDefaultLibraries>vccorlib.lib;msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+
+      <AdditionalDependencies>sdlpal.common.lib;vccorlib.lib;msvcrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
+
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
 
 
-      <AdditionalOptions>/nodefaultlib:vccorlib /nodefaultlib:msvcrt vccorlib.lib msvcrt.lib %(AdditionalOptions)</AdditionalOptions>
+
+
 
 
 
@@ -2208,7 +4412,15 @@
 
 
 
+
+
+
+
   </ItemDefinitionGroup>
+
+
+
+
 
 
 
@@ -2216,7 +4428,15 @@
 
 
 
+
+
+
+
     <ClCompile>
+
+
+
+
 
 
 
@@ -2224,7 +4444,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT>false</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -2232,7 +4460,15 @@
 
 
 
+
+
+
+
       <PreprocessorDefinitions>DLL_EXPORT;_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+
+
+
 
 
 
@@ -2240,7 +4476,15 @@
 
 
 
+
+
+
+
     <Link>
+
+
+
+
 
 
 
@@ -2248,15 +4492,30 @@
 
 
 
+
+
+
+
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+
+
+
+
 
 
 
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
 
+      <IgnoreSpecificDefaultLibraries>vccorlibd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+
+      <AdditionalDependencies>sdlpal.common.lib;vccorlibd.lib;msvcrtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
 
 
-      <AdditionalOptions>/nodefaultlib:vccorlibd /nodefaultlib:msvcrtd vccorlibd.lib msvcrtd.lib %(AdditionalOptions)</AdditionalOptions>
+
+
+
 
 
 
@@ -2264,7 +4523,15 @@
 
 
 
+
+
+
+
   </ItemDefinitionGroup>
+
+
+
+
 
 
 
@@ -2272,7 +4539,15 @@
 
 
 
+
+
+
+
     <ClCompile>
+
+
+
+
 
 
 
@@ -2280,7 +4555,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT>false</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -2288,7 +4571,15 @@
 
 
 
+
+
+
+
       <PreprocessorDefinitions>DLL_EXPORT;_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+
+
+
 
 
 
@@ -2296,7 +4587,15 @@
 
 
 
+
+
+
+
     <Link>
+
+
+
+
 
 
 
@@ -2304,15 +4603,30 @@
 
 
 
+
+
+
+
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+
+
+
+
 
 
 
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
 
+      <IgnoreSpecificDefaultLibraries>vccorlib.lib;msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+
+      <AdditionalDependencies>sdlpal.common.lib;vccorlib.lib;msvcrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
 
 
-      <AdditionalOptions>/nodefaultlib:vccorlib /nodefaultlib:msvcrt vccorlib.lib msvcrt.lib %(AdditionalOptions)</AdditionalOptions>
+
+
+
 
 
 
@@ -2320,7 +4634,15 @@
 
 
 
+
+
+
+
   </ItemDefinitionGroup>
+
+
+
+
 
 
 
@@ -2328,7 +4650,15 @@
 
 
 
+
+
+
+
     <ClCompile>
+
+
+
+
 
 
 
@@ -2336,7 +4666,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT>false</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -2344,7 +4682,15 @@
 
 
 
+
+
+
+
       <PreprocessorDefinitions>DLL_EXPORT;_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+
+
+
 
 
 
@@ -2352,7 +4698,15 @@
 
 
 
+
+
+
+
     <Link>
+
+
+
+
 
 
 
@@ -2360,15 +4714,30 @@
 
 
 
+
+
+
+
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+
+
+
+
 
 
 
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
 
+      <IgnoreSpecificDefaultLibraries>vccorlibd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+
+      <AdditionalDependencies>sdlpal.common.lib;vccorlibd.lib;msvcrtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
 
 
-      <AdditionalOptions>/nodefaultlib:vccorlibd /nodefaultlib:msvcrtd vccorlibd.lib msvcrtd.lib %(AdditionalOptions)</AdditionalOptions>
+
+
+
 
 
 
@@ -2376,41 +4745,85 @@
 
 
 
+
+
+
+
   </ItemDefinitionGroup>
+
+
 
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
 
+
+
     <ClCompile>
+
+
 
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
 
+
+
       <CompileAsWinRT>false</CompileAsWinRT>
+
+
 
       <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 
+
+
       <PreprocessorDefinitions>DLL_EXPORT;_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+
 
     </ClCompile>
 
+
+
     <Link>
+
+
 
       <SubSystem>Console</SubSystem>
 
+
+
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+
+
 
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
 
-      <AdditionalOptions>/nodefaultlib:vccorlibd /nodefaultlib:msvcrtd vccorlibd.lib msvcrtd.lib %(AdditionalOptions)</AdditionalOptions>
+      <IgnoreSpecificDefaultLibraries>vccorlibd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+
+      <AdditionalDependencies>sdlpal.common.lib;vccorlibd.lib;msvcrtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
+
+
 
     </Link>
 
+
+
   </ItemDefinitionGroup>
+
+
 
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
 
 
 
+
+
+
+
     <ClCompile>
+
+
+
+
 
 
 
@@ -2418,7 +4831,15 @@
 
 
 
+
+
+
+
       <CompileAsWinRT>false</CompileAsWinRT>
+
+
+
+
 
 
 
@@ -2426,7 +4847,15 @@
 
 
 
+
+
+
+
       <PreprocessorDefinitions>DLL_EXPORT;_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+
+
+
 
 
 
@@ -2434,23 +4863,44 @@
 
 
 
+
+
+
+
     <Link>
 
+      <IgnoreSpecificDefaultLibraries>vccorlib.lib;msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
 
 
-      <SubSystem>Console</SubSystem>
 
 
 
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+
+      <AdditionalDependencies>sdlpal.common.lib;vccorlib.lib;msvcrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
+
+
+
+
+
+
+
 
 
 
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
 
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
 
 
-      <AdditionalOptions>/nodefaultlib:vccorlib /nodefaultlib:msvcrt vccorlib.lib msvcrt.lib %(AdditionalOptions)</AdditionalOptions>
+
+
+
+
+
+
+
 
 
 
@@ -2458,37 +4908,77 @@
 
 
 
+
+
+
+
   </ItemDefinitionGroup>
+
+
 
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
 
+
+
     <ClCompile>
+
+
 
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
 
+
+
       <CompileAsWinRT>false</CompileAsWinRT>
+
+
 
       <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 
+
+
       <PreprocessorDefinitions>DLL_EXPORT;_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+
 
     </ClCompile>
 
+
+
     <Link>
+
+
 
       <SubSystem>Console</SubSystem>
 
+
+
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+
+
 
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
 
-      <AdditionalOptions>/nodefaultlib:vccorlib /nodefaultlib:msvcrt vccorlib.lib msvcrt.lib %(AdditionalOptions)</AdditionalOptions>
+      <IgnoreSpecificDefaultLibraries>vccorlib.lib;msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+
+      <AdditionalDependencies>sdlpal.common.lib;vccorlib.lib;msvcrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+
+      <AdditionalLibraryDirectories>$(OutDir)../SDLPal.Common</AdditionalLibraryDirectories>
+
+
 
     </Link>
 
+
+
   </ItemDefinitionGroup>
 
+
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+
+
+
+
 
 
 
@@ -2496,9 +4986,19 @@
 
 
 
+
+
+
+
   </ImportGroup>
 
 
 
+
+
+
+
 </Project>
+
+
 
