@@ -237,9 +237,6 @@
     <ClInclude Include="..\..\include\SDL_hints.h">
       <Filter>API Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\SDL_hidapi.h">
-      <Filter>API Headers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\SDL_joystick.h">
       <Filter>API Headers</Filter>
     </ClInclude>
@@ -402,13 +399,7 @@
     <ClInclude Include="..\..\src\SDL_dataqueue.h" />
     <ClInclude Include="..\..\src\SDL_error_c.h" />
     <ClInclude Include="..\..\src\SDL_list.h" />
-    <ClInclude Include="..\..\include\SDL_metal.h">
-      <Filter>API Headers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\SDL_misc.h">
-      <Filter>API Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\SDL_test_memory.h">
       <Filter>API Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\audio\SDL_audio_c.h">
@@ -480,17 +471,8 @@
     <ClInclude Include="..\..\src\events\default_cursor.h">
       <Filter>events</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\events\scancodes_windows.h">
-      <Filter>events</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\haptic\SDL_syshaptic.h">
       <Filter>haptic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\haptic\SDL_haptic_c.h">
-      <Filter>haptic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\hidapi\SDL_hidapi.h">
-      <Filter>hidapi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\joystick\SDL_gamecontrollerdb.h">
       <Filter>joystick</Filter>
@@ -504,9 +486,6 @@
     <ClInclude Include="..\..\src\joystick\controller_type.h">
       <Filter>joystick</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\joystick\usb_ids.h">
-      <Filter>joystick</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libm\math_libm.h">
       <Filter>libm</Filter>
     </ClInclude>
@@ -518,9 +497,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\locale\SDL_syslocale.h">
       <Filter>locale</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\misc\SDL_sysurl.h">
-      <Filter>misc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\audio\directsound\SDL_directsound.h">
       <Filter>audio\directsound</Filter>
@@ -547,9 +523,6 @@
       <Filter>haptic\windows</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\joystick\hidapi\SDL_hidapijoystick_c.h">
-      <Filter>joystick\hidapi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\joystick\hidapi\SDL_hidapi_rumble.h">
       <Filter>joystick\hidapi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\joystick\windows\SDL_dinputjoystick_c.h">
@@ -594,9 +567,6 @@
     <ClInclude Include="..\..\src\video\SDL_sysvideo.h">
       <Filter>video</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\video\SDL_egl_c.h">
-      <Filter>video</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\video\SDL_yuv_c.h">
       <Filter>video</Filter>
     </ClInclude>
@@ -613,9 +583,6 @@
       <Filter>video\dummy</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\video\yuv2rgb\yuv_rgb.h">
-      <Filter>video\yuv2rgb</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\video\yuv2rgb\yuv_rgb_sse_func.h">
       <Filter>video\yuv2rgb</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\video\yuv2rgb\yuv_rgb_std_func.h">
@@ -663,15 +630,6 @@
     <ClInclude Include="..\..\src\video\windows\wmmsg.h">
       <Filter>video\windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\video\windows\SDL_msctf.h">
-      <Filter>video\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\video\windows\SDL_windowsopengles.h">
-      <Filter>video\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\video\windows\SDL_windowstaskdialog.h">
-      <Filter>video\windows</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\timer\SDL_timer_c.h">
       <Filter>timer</Filter>
     </ClInclude>
@@ -686,9 +644,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\thread\windows\SDL_systhread_c.h">
       <Filter>thread\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\thread\generic\SDL_syscond_c.h">
-      <Filter>thread\generic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\sensor\SDL_sensor_c.h">
       <Filter>sensor</Filter>
@@ -726,9 +681,6 @@
     <ClInclude Include="..\..\src\render\opengles2\SDL_shaders_gles2.h">
       <Filter>render\opengles2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\render\opengles2\SDL_gles2funcs.h">
-      <Filter>render\opengles2</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\render\software\SDL_blendfillrect.h">
       <Filter>render\software</Filter>
     </ClInclude>
@@ -753,16 +705,10 @@
     <ClInclude Include="..\..\src\render\software\SDL_rotate.h">
       <Filter>render\software</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\render\software\SDL_triangle.h">
-      <Filter>render\software</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\power\SDL_syspower.h">
       <Filter>power</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\video\khronos\vulkan\vulkan_xlib_xrandr.h">
-      <Filter>video\khronos\vulkan</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\video\khronos\vulkan\vk_icd.h">
       <Filter>video\khronos\vulkan</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\video\khronos\vulkan\vk_layer.h">
@@ -823,8 +769,26 @@
       <Filter>video\khronos\vulkan</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\SDL_assert_c.h" />
-    <ClInclude Include="..\..\src\SDL_hints_c.h" />
     <ClInclude Include="..\..\src\SDL_internal.h" />
+    <ClInclude Include="..\..\include\SDL_hidapi.h" />
+    <ClInclude Include="..\..\include\SDL_metal.h" />
+    <ClInclude Include="..\..\include\SDL_test_memory.h" />
+    <ClInclude Include="..\..\src\events\scancodes_windows.h" />
+    <ClInclude Include="..\..\src\haptic\SDL_haptic_c.h" />
+    <ClInclude Include="..\..\src\hidapi\SDL_hidapi_c.h" />
+    <ClInclude Include="..\..\src\joystick\hidapi\SDL_hidapi_rumble.h" />
+    <ClInclude Include="..\..\src\joystick\usb_ids.h" />
+    <ClInclude Include="..\..\src\misc\SDL_sysurl.h" />
+    <ClInclude Include="..\..\src\render\opengles2\SDL_gles2funcs.h" />
+    <ClInclude Include="..\..\src\render\software\SDL_triangle.h" />
+    <ClInclude Include="..\..\src\SDL_hints_c.h" />
+    <ClInclude Include="..\..\src\thread\generic\SDL_syscond_c.h" />
+    <ClInclude Include="..\..\src\video\khronos\vulkan\vk_icd.h" />
+    <ClInclude Include="..\..\src\video\SDL_egl_c.h" />
+    <ClInclude Include="..\..\src\video\windows\SDL_msctf.h" />
+    <ClInclude Include="..\..\src\video\windows\SDL_windowsopengles.h" />
+    <ClInclude Include="..\..\src\video\windows\SDL_windowstaskdialog.h" />
+    <ClInclude Include="..\..\src\video\yuv2rgb\yuv_rgb_sse_func.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\audio\wasapi\SDL_wasapi.c" />
@@ -833,7 +797,6 @@
     <ClCompile Include="..\..\src\SDL_dataqueue.c" />
     <ClCompile Include="..\..\src\SDL_error.c" />
     <ClCompile Include="..\..\src\SDL_hints.c" />
-    <ClCompile Include="..\..\src\SDL_list.c" />
     <ClCompile Include="..\..\src\audio\SDL_audio.c">
       <Filter>audio</Filter>
     </ClCompile>
@@ -1035,9 +998,6 @@
     <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_gamecube.c">
       <Filter>joystick\hidapi</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_luna.c">
-      <Filter>joystick\hidapi</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_ps4.c">
       <Filter>joystick\hidapi</Filter>
     </ClCompile>
@@ -1045,9 +1005,6 @@
       <Filter>joystick\hidapi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_rumble.c">
-      <Filter>joystick\hidapi</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_stadia.c">
       <Filter>joystick\hidapi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_switch.c">
@@ -1203,9 +1160,6 @@
     <ClCompile Include="..\..\src\thread\SDL_thread.c">
       <Filter>thread</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\thread\windows\SDL_syscond_cv.c" >
-      <Filter>thread\windows</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\thread\windows\SDL_sysmutex.c">
       <Filter>thread\windows</Filter>
     </ClCompile>
@@ -1308,9 +1262,6 @@
     <ClCompile Include="..\..\src\render\software\SDL_rotate.c">
       <Filter>render\software</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\render\software\SDL_triangle.c">
-      <Filter>render\software</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\power\SDL_power.c">
       <Filter>power</Filter>
     </ClCompile>
@@ -1318,6 +1269,11 @@
     <ClCompile Include="..\..\src\power\windows\SDL_syspower.c">
       <Filter>power\windows</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_luna.c" />
+    <ClCompile Include="..\..\src\joystick\hidapi\SDL_hidapi_stadia.c" />
+    <ClCompile Include="..\..\src\render\software\SDL_triangle.c" />
+    <ClCompile Include="..\..\src\SDL_list.c" />
+    <ClCompile Include="..\..\src\thread\windows\SDL_syscond_cv.c" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\main\windows\version.rc" />
