@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\dynapi">
+      <UniqueIdentifier>{aacef013-bc96-4c90-9e06-bc456e6aa219}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compatible Headers">
+      <UniqueIdentifier>{181eba55-facb-4344-81a5-534b93238199}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\sdl2-compat\src\sdl2_compat.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\src\sdl2_protos.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\src\sdl3_include_wrapper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\src\sdl3_syms.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\src\dynapi\SDL_dynapi.h">
+      <Filter>头文件\dynapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\src\dynapi\SDL_dynapi_overrides.h">
+      <Filter>头文件\dynapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\src\dynapi\SDL_dynapi_procs.h">
+      <Filter>头文件\dynapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\begin_code.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\close_code.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_assert.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_atomic.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_audio.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_bits.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_blendmode.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_clipboard.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config_android.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config_emscripten.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config_iphoneos.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config_macosx.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config_minimal.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config_ngage.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config_os2.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config_pandora.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config_unix.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config_windows.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config_wingdk.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config_winrt.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_config_xbox.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_copying.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_cpuinfo.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_egl.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_endian.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_error.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_events.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_filesystem.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_gamecontroller.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_gesture.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_guid.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_haptic.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_hidapi.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_hints.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_joystick.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_keyboard.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_keycode.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_loadso.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_locale.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_log.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_main.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_messagebox.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_metal.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_misc.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_mouse.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_mutex.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_name.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_opengl.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_opengl_glext.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_opengles.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_opengles2.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_opengles2_gl2.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_opengles2_gl2ext.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_opengles2_gl2platform.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_opengles2_khrplatform.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_pixels.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_platform.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_power.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_quit.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_rect.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_render.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_revision.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_rwops.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_scancode.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_sensor.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_shape.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_stdinc.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_surface.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_system.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_syswm.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_test.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_test_assert.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_test_common.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_test_compare.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_test_crc32.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_test_font.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_test_fuzzer.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_test_harness.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_test_images.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_test_log.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_test_md5.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_test_memory.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_test_random.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_thread.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_timer.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_touch.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_types.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_version.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_video.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sdl2-compat\include\SDL2\SDL_vulkan.h">
+      <Filter>Compatible Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\sdl2-compat\src\sdl2_compat.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdl2-compat\src\dynapi\SDL_dynapi.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sdl2-compat\src\sdl2_mslibc.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\sdl2-compat\src\version.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="..\..\sdl2-compat\src\sdl2_mslibc_x64.masm">
+      <Filter>源文件</Filter>
+    </MASM>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\sdl2-compat\include\SDL2\SDL_config.h.cmake">
+      <Filter>Compatible Headers</Filter>
+    </None>
+    <None Include="..\..\sdl2-compat\include\SDL2\SDL_config.h.in">
+      <Filter>Compatible Headers</Filter>
+    </None>
+    <None Include="..\..\sdl2-compat\include\SDL2\SDL_revision.h.cmake">
+      <Filter>Compatible Headers</Filter>
+    </None>
+  </ItemGroup>
+</Project>

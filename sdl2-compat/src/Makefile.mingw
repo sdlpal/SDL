@@ -1,0 +1,46 @@
+# GNU Makefile for Windows to build SDL2-compat.
+#
+
+# change INCLUDES so it points to SDL3 headers directory:
+INCLUDES = -Iinclude
+
+ifeq ($(CROSS),)
+CC = gcc
+RC = windres
+else
+CC = $(CROSS)-gcc
+RC = $(CROSS)-windres
+endif
+LD = $(CC)
+
+CPPFLAGS = -DDLL_EXPORT -DNDEBUG -DSDL_INCLUDE_STDBOOL_H
+
+CFLAGS  = -O3 -Wall
+LDFLAGS = -nostdlib -shared -Wl,--no-undefined -Wl,--enable-auto-image-base -Wl,--out-implib,$(IMPLIB)
+LDLIBS  = -lkernel32 -luser32
+# libgcc is needed for 32 bit (x86) builds:
+LDLIBS += -static-libgcc -lgcc
+
+DLL = SDL2.dll
+IMPLIB = libSDL2.dll.a
+
+OBJ = sdl2_compat.o dynapi/SDL_dynapi.o version.o
+
+.SUFFIXES:
+.SUFFIXES: .o .c .rc
+
+all: $(DLL)
+
+$(LIB): $(DLL)
+$(DLL): $(OBJ)
+	$(LD) -o $@ $(LDFLAGS) $(OBJ) $(LDLIBS)
+
+.c.o:
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDES) -o $@ -c $<
+.rc.o:
+	$(RC) -o $@ $<
+
+distclean: clean
+	$(RM) $(DLL) $(IMPLIB)
+clean:
+	$(RM) *.o dynapi/*.o

@@ -1,0 +1,53 @@
+# GNU Makefile for Mac OS X to build SDL2-compat.
+#
+
+# change INCLUDES so it points to SDL3 headers directory:
+INCLUDES = -Iinclude
+
+# minimum Mac OS X target
+DEPLOYMENT_TARGET = 10.9
+
+ifeq ($(CROSS),)
+CC = gcc
+else
+CC = $(CROSS)-gcc
+endif
+LD = $(CC)
+
+CPPFLAGS = -DNDEBUG -D_THREAD_SAFE -DSDL_INCLUDE_STDBOOL_H
+
+CFLAGS  = -fPIC -fvisibility=hidden -O3 -Wall
+LDFLAGS = -dynamiclib -Wl,-undefined,error -Wl,-single_module
+#LDFLAGS+= -Wl,-headerpad_max_install_names
+LDFLAGS+= -Wl,-install_name,"/usr/local/lib/$(DYLIB)"
+LDFLAGS+= -Wl,-compatibility_version,3201.0 -Wl,-current_version,3201.52
+LDLIBS  = -Wl,-framework,AppKit
+# this is needed for x86_64 - cross-gcc might not add it.
+#LDLIBS += -Wl,-lbundle1.o
+ifneq ($(DEPLOYMENT_TARGET),)
+CFLAGS += -mmacosx-version-min=$(DEPLOYMENT_TARGET)
+LDFLAGS+= -mmacosx-version-min=$(DEPLOYMENT_TARGET)
+endif
+
+DYLIB = libSDL2-2.0.0.dylib
+
+OBJ = sdl2_compat.o dynapi/SDL_dynapi.o sdl2_compat_objc.o
+
+.SUFFIXES:
+.SUFFIXES: .o .c .m
+
+all: $(DYLIB)
+
+$(DYLIB): $(OBJ)
+	$(LD) -o $@ $(LDFLAGS) $(OBJ) $(LDLIBS)
+	ln -sf $(DYLIB) libSDL2.dylib
+
+.c.o:
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDES) -o $@ -c $<
+.m.o:
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDES) -o $@ -c $<
+
+distclean: clean
+	$(RM) *.dylib
+clean:
+	$(RM) *.o dynapi/*.o
