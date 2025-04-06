@@ -8,7 +8,7 @@
 #	nmake /f Makefile.vc CPU=x64
 
 # change INCLUDES so it points to SDL3 headers directory:
-INCLUDES = -I../../include
+INCLUDES = -Iinclude
 
 CPPFLAGS = -DNDEBUG -DDLL_EXPORT
 # -DSDL_INCLUDE_STDBOOL_H

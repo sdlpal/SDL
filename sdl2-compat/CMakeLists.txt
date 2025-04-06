@@ -3,7 +3,7 @@
 #        cmake -DSDL3_INCLUDE_DIRS=/opt/SDL3/include [other stuff ....]
 
 cmake_minimum_required(VERSION 3.0...3.28)
-project(sdl2_compat VERSION 2.32.52 LANGUAGES C)
+project(sdl2_compat VERSION 2.32.54 LANGUAGES C)
 
 if(POLICY CMP0074)
   # CMP0074: find_package() uses <PackageName>_ROOT variables.
@@ -539,6 +539,8 @@ if(SDL2COMPAT_INSTALL)
   )
   install(
     FILES
+      cmake/sdl2-config.cmake
+      cmake/sdl2-config-version.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/SDL2Config.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/SDL2ConfigVersion.cmake
     DESTINATION "${SDL2COMPAT_INSTALL_CMAKEDIR}"
@@ -597,8 +599,8 @@ if(SDL2COMPAT_INSTALL)
   set(ENABLE_SHARED_TRUE "")
   set(ENABLE_SHARED_FALSE "#")
 
-  configure_file(sdl2_compat.pc.in sdl2_compat.pc @ONLY)
-  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/sdl2_compat.pc"
+  configure_file(sdl2-compat.pc.in sdl2-compat.pc @ONLY)
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/sdl2-compat.pc"
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
   )
 
