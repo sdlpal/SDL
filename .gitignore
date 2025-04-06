@@ -23,7 +23,6 @@ bld/
 [Oo]bj/
 Generated Files/
 BundleArtifacts/
-Test/
 *.o
 *.bc
 *.data
@@ -239,7 +238,6 @@ android/libs
 android/so
 *.properties
 *.keystore
-resources
 
 sdlpal
 data
