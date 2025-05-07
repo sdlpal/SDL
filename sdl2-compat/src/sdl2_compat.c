@@ -58,7 +58,7 @@ This breaks the build when creating SDL_ ## DisableScreenSaver
  * The number might increment past 90 if there are a ton of releases.
  */
 #define SDL2_COMPAT_VERSION_MINOR 32
-#define SDL2_COMPAT_VERSION_PATCH 54
+#define SDL2_COMPAT_VERSION_PATCH 56
 
 #ifndef SDL2COMPAT_REVISION
 #define SDL2COMPAT_REVISION "SDL-2." STRINGIFY(SDL2_COMPAT_VERSION_MINOR) "." STRINGIFY(SDL2_COMPAT_VERSION_PATCH) "-no-vcs"
@@ -111,6 +111,13 @@ This breaks the build when creating SDL_ ## DisableScreenSaver
 #define SDL2COMPAT_MAXPATH 1024
 #endif
 
+#if defined(SDL_PLATFORM_UNIX) && !defined(SDL_PLATFORM_ANDROID)
+/* We don't know whether SDL3 was really compiled with X11 support on this
+ * platform, but probably it was */
+#define SDL2COMPAT_HAVE_X11
+#else
+#undef SDL2COMPAT_HAVE_X11
+#endif
 
 /* SDL2 function prototypes:  */
 #include "sdl2_protos.h"
@@ -431,7 +438,7 @@ static char loaderror[256];
 #endif
 
 #ifndef SDL3_REQUIRED_VER
-#define SDL3_REQUIRED_VER SDL_VERSIONNUM(3,2,10)
+#define SDL3_REQUIRED_VER SDL_VERSIONNUM(3,2,12)
 #endif
 
 #ifndef DIRSEP
@@ -481,12 +488,9 @@ static QuirkEntryType quirks[] = {
     { "hl.exe", SDL_HINT_MOUSE_EMULATE_WARP_WITH_RELATIVE, "0" },
 #endif
 
-    /* Moonlight supports high DPI properly under Wayland.
-       It also reads fractional values in wheel events. */
+    /* Moonlight supports high DPI properly under Wayland */
     { "moonlight", SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY, "0" },
     { "moonlight-qt", SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY, "0" },
-    { "moonlight", "SDL_MOUSE_INTEGER_MODE", "1" },
-    { "moonlight-qt", "SDL_MOUSE_INTEGER_MODE", "1" },
 
     /* Pragtical code editor supports high DPI properly under Wayland */
     { "pragtical", SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY, "0" },
@@ -498,18 +502,29 @@ static QuirkEntryType quirks[] = {
     { "tauon/__main__.py", SDL_HINT_VIDEO_WAYLAND_SCALE_TO_DISPLAY, "0" },
     { "tauon/__main__.py", SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR, "0" },
 
+#ifdef SDL2COMPAT_HAVE_X11
     /* Stylus Labs Write does its own X11 input handling */
     { "Write", "SDL_VIDEO_X11_XINPUT2", "0" },
 
-    /* PPSSPP reads fractional values in wheel events */
-    { "PPSSPP", "SDL_MOUSE_INTEGER_MODE", "1" },
-    { "PPSSPPSDL", "SDL_MOUSE_INTEGER_MODE", "1" },
-
-    /* Lite-XL reads fractional values in wheel events */
-    { "lite-xl", "SDL_MOUSE_INTEGER_MODE", "1" },
-
     /* The UE5 editor has input issues and broken toast notification positioning on Wayland */
     { "UnrealEditor", SDL_HINT_VIDEO_DRIVER, "x11" },
+
+    /* Darkest Dungeon assumes X11 and crashes otherwise
+     * https://github.com/libsdl-org/SDL/issues/12751 */
+    { "darkest.bin.x86", SDL_HINT_VIDEO_DRIVER, "x11" },
+    { "darkest.bin.x86_64", SDL_HINT_VIDEO_DRIVER, "x11" },
+
+    /* World of Goo 2 assumes X11 and crashes otherwise
+     * https://github.com/libsdl-org/SDL/issues/12752 */
+    { "WorldOfGoo2", SDL_HINT_VIDEO_DRIVER, "x11" },
+
+    /* Infinity Engine Enhanced Edition assumes X11 and crashes otherwise
+     * https://github.com/libsdl-org/SDL/issues/12753 */
+    { "BaldursGate", SDL_HINT_VIDEO_DRIVER, "x11" },
+    { "BaldursGateII", SDL_HINT_VIDEO_DRIVER, "x11" },
+    { "IcewindDale", SDL_HINT_VIDEO_DRIVER, "x11" },
+    { "Torment64", SDL_HINT_VIDEO_DRIVER, "x11" },
+#endif
 };
 
 #ifdef __linux__
@@ -604,6 +619,16 @@ SDL2Compat_GetExeName(void)
         }
     }
     return exename;
+}
+
+SDL_DECLSPEC const char * SDLCALL
+SDL_GetPlatform(void)
+{
+#ifdef SDL_PLATFORM_MACOS
+    return "Mac OS X";
+#else
+    return SDL3_GetPlatform();
+#endif
 }
 
 static struct {
@@ -1319,9 +1344,8 @@ SDL2Compat_InitOnStartupInternal(void)
     SDL3_SetHint("SDL_VIDEO_SYNC_WINDOW_OPERATIONS", "1");
     SDL3_SetHint("SDL_VIDEO_X11_EXTERNAL_WINDOW_INPUT", "0");
 
-    /* Emulate both integer mouse coordinates and integer mouse wheel deltas for maximum compatibility.
-       Apps that use preciseX/Y for smooth scrolling can be quirked to get fractional wheel deltas. */
-    SDL3_SetHint("SDL_MOUSE_INTEGER_MODE", "3");
+    /* Emulate integer mouse coordinates */
+    SDL3_SetHint("SDL_MOUSE_INTEGER_MODE", "1");
 
     // Pretend Wayland doesn't have fractional scaling by default.
     // This is more compatible with applications that have only been tested under X11 without high DPI support.
@@ -2312,8 +2336,8 @@ static SDL2_Event *Event3to2(const SDL_Event *event3, SDL2_Event *event2)
             wheel->y = (Sint32)(event3->wheel.x * 120);
         } else {
             SDL2_MouseWheelEvent *wheel = &event2->wheel;
-            wheel->x = (Sint32)event3->wheel.x;
-            wheel->y = (Sint32)event3->wheel.y;
+            wheel->x = event3->wheel.integer_x;
+            wheel->y = event3->wheel.integer_y;
             wheel->preciseX = event3->wheel.x;
             wheel->preciseY = event3->wheel.y;
             wheel->mouseX = (Sint32)event3->wheel.mouse_x;
@@ -4020,14 +4044,16 @@ SDL_CalculateGammaRamp(float gamma, Uint16 *ramp)
 SDL_DECLSPEC int SDLCALL
 SDL_SetWindowGammaRamp(SDL_Window *window, const Uint16 *r, const Uint16 *g, const Uint16 *b)
 {
-    Uint16 *gamma;
-
     if (!window) {
         SDL3_SetError("Invalid window");
         return -1;
     }
 
-    gamma = (Uint16 *)SDL3_GetPointerProperty(SDL3_GetWindowProperties(window), PROP_WINDOW_GAMMA_RAMP, NULL);
+    SDL3_Unsupported();
+    return -1;
+
+#if 0 /* Leaving this code here in case we need it for a compatibility quirk */
+    Uint16 *gamma = (Uint16 *)SDL3_GetPointerProperty(SDL3_GetWindowProperties(window), PROP_WINDOW_GAMMA_RAMP, NULL);
     if (!gamma) {
         if (SDL_GetWindowGammaRamp(window, NULL, NULL, NULL) < 0) {
             return -1;
@@ -4045,6 +4071,7 @@ SDL_SetWindowGammaRamp(SDL_Window *window, const Uint16 *r, const Uint16 *g, con
         SDL_memcpy(&gamma[2*256], b, 256*sizeof(Uint16));
     }
     return 0;
+#endif
 }
 
 static void SDLCALL CleanupFreeableProperty(void *userdata, void *value)
@@ -5431,27 +5458,26 @@ static void SDL_CalculateShapeBitmap(SDL_WindowShapeMode mode, SDL2_Surface *sha
     int x = 0;
     int y = 0;
     Uint8 r = 0, g = 0, b = 0, alpha = 0;
-    Uint8 *pixel = NULL;
     Uint32 pixel_value = 0, mask_value = 0;
     SDL_Color key;
 
     for (y = 0; y < shape->h; y++) {
         for (x = 0; x < shape->w; x++) {
+            const Uint8 *shape_pixels = (Uint8 *)(shape->pixels) + (y * shape->pitch) + (x * shape->format->BytesPerPixel);
             alpha = 0;
             pixel_value = 0;
-            pixel = (Uint8 *)(shape->pixels) + (y * shape->pitch) + (x * shape->format->BytesPerPixel);
             switch (shape->format->BytesPerPixel) {
             case 1:
-                pixel_value = *pixel;
+                pixel_value = *shape_pixels;
                 break;
             case 2:
-                pixel_value = *(Uint16 *)pixel;
+                pixel_value = *(Uint16 *)shape_pixels;
                 break;
             case 3:
-                pixel_value = *(Uint32 *)pixel & (~shape->format->Amask);
+                pixel_value = *(Uint32 *)shape_pixels & (~shape->format->Amask);
                 break;
             case 4:
-                pixel_value = *(Uint32 *)pixel;
+                pixel_value = *(Uint32 *)shape_pixels;
                 break;
             }
             SDL_GetRGBA(pixel_value, shape->format, &r, &g, &b, &alpha);
@@ -6246,6 +6272,10 @@ SDL_RenderCopy(SDL_Renderer *renderer, SDL_Texture *texture, const SDL_Rect *src
         srcfrect.w = (float)srcrect->w;
         srcfrect.h = (float)srcrect->h;
         psrcfrect = &srcfrect;
+
+        if (srcrect->w == 0 || srcrect->h == 0) {
+            return 0;
+        }
     }
     if (dstrect) {
         dstfrect.x = (float)dstrect->x;
@@ -6270,6 +6300,10 @@ SDL_RenderCopyF(SDL_Renderer *renderer, SDL_Texture *texture, const SDL_Rect *sr
         srcfrect.w = (float)srcrect->w;
         srcfrect.h = (float)srcrect->h;
         psrcfrect = &srcfrect;
+
+        if (srcrect->w == 0 || srcrect->h == 0) {
+            return 0;
+        }
     }
     retval = SDL3_RenderTexture(renderer, texture, psrcfrect, dstrect) ? 0 : -1;
     return retval < 0 ? retval : FlushRendererIfNotBatching(renderer);
@@ -6294,6 +6328,10 @@ SDL_RenderCopyEx(SDL_Renderer *renderer, SDL_Texture *texture,
         srcfrect.w = (float)srcrect->w;
         srcfrect.h = (float)srcrect->h;
         psrcfrect = &srcfrect;
+
+        if (srcrect->w == 0 || srcrect->h == 0) {
+            return 0;
+        }
     }
 
     if (dstrect) {
@@ -6329,6 +6367,10 @@ SDL_RenderCopyExF(SDL_Renderer *renderer, SDL_Texture *texture,
         srcfrect.w = (float)srcrect->w;
         srcfrect.h = (float)srcrect->h;
         psrcfrect = &srcfrect;
+
+        if (srcrect->w == 0 || srcrect->h == 0) {
+            return 0;
+        }
     }
 
     retval = SDL3_RenderTextureRotated(renderer, texture, psrcfrect, dstrect, angle, center, flip) ? 0 : -1;
@@ -8180,6 +8222,14 @@ DisplayMode_3to2(const SDL_DisplayMode *in, SDL2_DisplayMode *out) {
         out->h = in->h;
         out->refresh_rate = (int) SDL3_lroundf(in->refresh_rate);
         out->driverdata = in->internal;
+
+        /* Make sure the returned refresh rate and format are something valid */
+        if (!out->refresh_rate) {
+            out->refresh_rate = 60;
+        }
+        if (!out->format) {
+            out->format = SDL_PIXELFORMAT_XRGB8888;
+        }
     }
 }
 
@@ -8403,13 +8453,23 @@ SDL_GetDesktopDisplayMode(int displayIndex, SDL2_DisplayMode *mode)
 }
 
 #define PROP_WINDOW_FULLSCREEN_MODE "sdl2-compat.window.fullscreen-mode"
+#define PROP_WINDOW_FULLSCREEN_RESIZE_W "sdl2-compat.window.fullscreen_resize_w"
+#define PROP_WINDOW_FULLSCREEN_RESIZE_H "sdl2-compat.window.fullscreen_resize_h"
+#define PROP_WINDOW_FULLSCREEN_DISPLAY "sdl2-compat.window.preferred_fullscreen_display"
 
 static int ApplyFullscreenMode(SDL_Window *window)
 {
     /* Always try to enter fullscreen on the current display */
-    const SDL_DisplayID displayID = SDL3_GetDisplayForWindow(window);
-    SDL2_DisplayMode *property = (SDL2_DisplayMode *)SDL3_GetPointerProperty(SDL3_GetWindowProperties(window), PROP_WINDOW_FULLSCREEN_MODE, NULL);
+    SDL_DisplayID displayID = SDL3_GetDisplayForWindow(window);
+    const SDL_PropertiesID window_props = SDL3_GetWindowProperties(window);
+    SDL2_DisplayMode *property = (SDL2_DisplayMode *)SDL3_GetPointerProperty(window_props, PROP_WINDOW_FULLSCREEN_MODE, NULL);
     SDL_DisplayMode mode;
+
+    /* Calling SDL3_GetDisplayForWindow supplies the display where the window currently is, but not necessarily
+     * the display on which the window should become fullscreen, particularly in cases where the backend can't
+     * actually reposition the window. This must only be queried *after* calling SDL3_GetDisplayForWindow().
+     */
+    displayID = SDL3_GetNumberProperty(window_props, PROP_WINDOW_FULLSCREEN_DISPLAY, displayID);
 
     SDL3_zero(mode);
     if (property) {
@@ -8417,7 +8477,19 @@ static int ApplyFullscreenMode(SDL_Window *window)
         mode.h = property->h;
         mode.refresh_rate = (float)property->refresh_rate;
     } else {
-        SDL3_GetWindowSize(window, &mode.w, &mode.h);
+        int count = 0;
+        int w, h;
+        SDL3_free(SDL3_GetFullscreenDisplayModes(displayID, &count));
+
+        /* If the video driver has no fullscreen modes, transition to fullscreen desktop mode */
+        if (count == 0) {
+            return 0;
+        }
+
+        /* If no mode was explicitly set, the window dimensions will determine it. */
+        SDL3_GetWindowSize(window, &w, &h);
+        mode.w = (int)SDL3_GetNumberProperty(window_props, PROP_WINDOW_FULLSCREEN_RESIZE_W, w);
+        mode.h = (int)SDL3_GetNumberProperty(window_props, PROP_WINDOW_FULLSCREEN_RESIZE_H, h);
     }
 
     /* The SDL2 refresh rate is rounded off, and SDL3 checks that the mode parameters match exactly, so try to find the closest matching SDL3 mode. */
@@ -8426,6 +8498,15 @@ static int ApplyFullscreenMode(SDL_Window *window)
     if (mode.displayID && SDL3_SetWindowFullscreenMode(window, &mode)) {
         return 0;
     }
+    else if (property) {
+        const SDL_DisplayMode *desktop = SDL3_GetDesktopDisplayMode(displayID);
+
+        /* It's possible that this was an attempted transition to the desktop display mode on a driver without modesetting support */
+        if (desktop && desktop->w == property->w && desktop->h == property->h) {
+            return 0;
+        }
+    }
+
     return -1;
 }
 
@@ -8466,11 +8547,6 @@ SDL_GetWindowDisplayMode(SDL_Window *window, SDL2_DisplayMode *mode)
         if (SDL_GetDesktopDisplayMode(display, mode) < 0) {
             return -1;
         }
-
-        /* When returning the desktop mode, make sure the refresh is some nonzero value. */
-        if (mode->refresh_rate == 0) {
-            mode->refresh_rate = 60;
-        }
     } else {
         if (!SDL_GetClosestDisplayMode(display, mode, mode)) {
             SDL_zerop(mode);
@@ -8504,14 +8580,6 @@ SDL_GetClosestDisplayMode(int displayIndex, const SDL2_DisplayMode *mode, SDL2_D
     }
 
     DisplayMode_3to2(ret3, closest);
-
-    /* Make sure the returned refresh rate and format are something valid */
-    if (!closest->refresh_rate) {
-        closest->refresh_rate = mode->refresh_rate ? mode->refresh_rate : 60;
-    }
-    if (!closest->format) {
-        closest->format = SDL_PIXELFORMAT_XRGB8888;
-    }
     return closest;
 }
 
@@ -8800,6 +8868,12 @@ SDL_GetWindowFlags(SDL_Window *window)
     Uint32 flags3 = (Uint32) SDL3_GetWindowFlags(window);
     Uint32 flags = (flags3 & ~(SDL2_WINDOW_SHOWN | SDL2_WINDOW_FULLSCREEN | SDL2_WINDOW_FULLSCREEN_DESKTOP | SDL2_WINDOW_SKIP_TASKBAR | SDL2_WINDOW_ALWAYS_ON_TOP));
 
+    /* If we get no flags back from SDL3, check if the window is actually valid */
+    if (flags3 == 0 && SDL3_GetWindowID(window) == 0) {
+        /* SDL2 always returns 0 for an invalid window */
+        return 0;
+    }
+
     if ((flags3 & SDL2_WINDOW_HIDDEN) == 0) {
         flags |= SDL2_WINDOW_SHOWN;
     }
@@ -9067,6 +9141,7 @@ SDL_SetWindowFullscreen(SDL_Window *window, Uint32 flags)
 {
     int ret = 0;
     bool fullscreen = false;
+    SDL_WindowFlags old_flags = SDL_GetWindowFlags(window);
 
     if (flags == SDL2_WINDOW_FULLSCREEN_DESKTOP) {
         fullscreen = true;
@@ -9078,6 +9153,20 @@ SDL_SetWindowFullscreen(SDL_Window *window, Uint32 flags)
 
     if (ret == 0) {
         ret = SDL3_SetWindowFullscreen(window, fullscreen) ? 0 : -1;
+        if (!ret && !fullscreen && (old_flags & SDL2_WINDOW_FULLSCREEN)) {
+            /* SDL2 applied size changes while in fullscreen to the non-fullscreen size as well. */
+            int w, h;
+            SDL_PropertiesID props = SDL3_GetWindowProperties(window);
+            w = SDL3_GetNumberProperty(props, PROP_WINDOW_FULLSCREEN_RESIZE_W, 0);
+            h = SDL3_GetNumberProperty(props, PROP_WINDOW_FULLSCREEN_RESIZE_H, 0);
+
+            if (w && h) {
+                SDL_SetWindowSize(window, w, h);
+            }
+
+            SDL3_ClearProperty(props, PROP_WINDOW_FULLSCREEN_RESIZE_W);
+            SDL3_ClearProperty(props, PROP_WINDOW_FULLSCREEN_RESIZE_H);
+        }
     }
     return ret;
 }
@@ -9098,10 +9187,22 @@ SDL_SetWindowIcon(SDL_Window *window, SDL2_Surface *icon)
 SDL_DECLSPEC void SDLCALL
 SDL_SetWindowSize(SDL_Window *window, int w, int h)
 {
+    SDL_WindowFlags flags = SDL_GetWindowFlags(window);
+
     SDL_PropertiesID props = SDL3_GetWindowProperties(window);
-    SDL3_SetNumberProperty(props, PROP_WINDOW_EXPECTED_WIDTH, w);
-    SDL3_SetNumberProperty(props, PROP_WINDOW_EXPECTED_HEIGHT, h);
-    SDL3_SetWindowSize(window, w, h);
+    if (!(flags & SDL2_WINDOW_FULLSCREEN)) {
+        SDL3_SetNumberProperty(props, PROP_WINDOW_EXPECTED_WIDTH, w);
+        SDL3_SetNumberProperty(props, PROP_WINDOW_EXPECTED_HEIGHT, h);
+        SDL3_SetWindowSize(window, w, h);
+    } else {
+        /* SDL2 can change the video mode of exclusive fullscreen windows by setting the size. */
+        SDL3_SetNumberProperty(props, PROP_WINDOW_FULLSCREEN_RESIZE_W, w);
+        SDL3_SetNumberProperty(props, PROP_WINDOW_FULLSCREEN_RESIZE_H, h);
+
+        if ((flags & SDL2_WINDOW_FULLSCREEN_DESKTOP) != SDL2_WINDOW_FULLSCREEN_DESKTOP) {
+            ApplyFullscreenMode(window);
+        }
+    }
 }
 
 SDL_DECLSPEC void SDLCALL
@@ -9805,25 +9906,25 @@ SDL_MapRGBA(const SDL2_PixelFormat *format2, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 }
 
 SDL_DECLSPEC void SDLCALL
-SDL_GetRGB(Uint32 pixel, const SDL2_PixelFormat *format2, Uint8 * r, Uint8 * g, Uint8 * b)
+SDL_GetRGB(Uint32 pixelvalue, const SDL2_PixelFormat *format2, Uint8 *r, Uint8 *g, Uint8 *b)
 {
     const SDL_PixelFormatDetails *format = GetPixelFormatDetails(format2);
     if (!format) {
         *r = *g = *b = 0;
         return;
     }
-    SDL3_GetRGB(pixel, format, format2->palette, r, g, b);
+    SDL3_GetRGB(pixelvalue, format, format2->palette, r, g, b);
 }
 
 SDL_DECLSPEC void SDLCALL
-SDL_GetRGBA(Uint32 pixel, const SDL2_PixelFormat *format2, Uint8 * r, Uint8 * g, Uint8 * b, Uint8 *a)
+SDL_GetRGBA(Uint32 pixelvalue, const SDL2_PixelFormat *format2, Uint8 *r, Uint8 *g, Uint8 *b, Uint8 *a)
 {
     const SDL_PixelFormatDetails *format = GetPixelFormatDetails(format2);
     if (!format) {
         *r = *g = *b = *a = 0;
         return;
     }
-    SDL3_GetRGBA(pixel, format, format2->palette, r, g, b, a);
+    SDL3_GetRGBA(pixelvalue, format, format2->palette, r, g, b, a);
 }
 
 SDL_DECLSPEC SDL_Renderer * SDLCALL
@@ -9857,8 +9958,7 @@ SDL_LockSurface(SDL2_Surface *surface)
         if (!SDL3_LockSurface(surface3)) {
             return -1;
         }
-        surface->pixels = surface3->pixels;
-        surface->pitch = surface3->pitch;
+        SynchronizeSurface3to2(surface3, surface);
     }
 
     /* Increment the surface lock count, for recursive locks */
@@ -9880,8 +9980,7 @@ SDL_UnlockSurface(SDL2_Surface *surface)
 
     SDL3_UnlockSurface(surface3);
 
-    surface->pixels = surface3->pixels;
-    surface->pitch = surface3->pitch;
+    SynchronizeSurface3to2(surface3, surface);
 }
 
 SDL_DECLSPEC int SDLCALL
@@ -9968,7 +10067,8 @@ SDL_GetSurfaceBlendMode(SDL2_Surface *surface, SDL_BlendMode *blendMode)
     return SDL3_GetSurfaceBlendMode(Surface2to3(surface), blendMode) ? 0 : -1;
 }
 
-static void SDLCALL CleanupWindowSurface(void *userdata, void *value)
+/* Cleanup callback for SDL2 surfaces that are retained by an SDL3 object */
+static void SDLCALL CleanupRetainedSurface2(void *userdata, void *value)
 {
     SDL2_Surface *surface = (SDL2_Surface *)value;
     surface->flags &= ~SDL_DONTFREE;
@@ -10003,7 +10103,7 @@ SDL_GetWindowSurface(SDL_Window *window)
                 if (surface2) {
                     surface2->flags |= SDL_DONTFREE;
 
-                    SDL3_SetPointerPropertyWithCleanup(SDL3_GetWindowProperties(window), PROP_SURFACE2, surface2, CleanupWindowSurface, NULL);
+                    SDL3_SetPointerPropertyWithCleanup(SDL3_GetWindowProperties(window), PROP_SURFACE2, surface2, CleanupRetainedSurface2, NULL);
                 }
             }
         }
@@ -10018,7 +10118,15 @@ SDL_LockTextureToSurface(SDL_Texture *texture, const SDL_Rect *rect, SDL2_Surfac
     if (!SDL3_LockTextureToSurface(texture, rect, &surface3)) {
         return -1;
     }
-    *surface = Surface3to2(surface3);
+    *surface = CreateSurface2from3(surface3);
+    if (!*surface) {
+        SDL_UnlockTexture(texture);
+        return -1;
+    }
+
+    /* This surface is freed by SDL_UnlockTexture() or SDL_DestroyTexture(), not by SDL_FreeSurface() */
+    (*surface)->flags |= SDL_DONTFREE;
+    SDL3_SetPointerPropertyWithCleanup(SDL3_GetSurfaceProperties(surface3), PROP_SURFACE2, *surface, CleanupRetainedSurface2, NULL);
     return 0;
 }
 
@@ -10084,7 +10192,7 @@ SDL_SetWindowsMessageHook(SDL2_WindowsMessageHook callback, void *userdata)
 }
 #endif /* SDL_PLATFORM_WINDOWS */
 
-#if defined(SDL_PLATFORM_UNIX) && !defined(SDL_PLATFORM_ANDROID)
+#ifdef SDL2COMPAT_HAVE_X11
 static bool SDLCALL SDL2COMPAT_X11EventHook(void *userdata, XEvent *xevent)
 {
     SDL2_Event event;
@@ -10100,7 +10208,7 @@ static bool SDLCALL SDL2COMPAT_X11EventHook(void *userdata, XEvent *xevent)
     SDL_PushEvent(&event);
     return true;
 }
-#endif /* SDL_PLATFORM_UNIX */
+#endif /* SDL2COMPAT_HAVE_X11 */
 
 /* SDL3 split this into getter/setter functions. */
 SDL_DECLSPEC Uint8 SDLCALL
@@ -10112,7 +10220,7 @@ SDL_EventState(Uint32 type, int state)
 #ifdef SDL_PLATFORM_WINDOWS
             SDL3_SetWindowsMessageHook(SDL3to2_WindowsMessageHook, NULL);
 #endif
-#if defined(SDL_PLATFORM_UNIX) && !defined(SDL_PLATFORM_ANDROID)
+#ifdef SDL2COMPAT_HAVE_X11
             SDL3_SetX11EventHook(SDL2COMPAT_X11EventHook, NULL);
 #endif
         }
@@ -10124,7 +10232,7 @@ SDL_EventState(Uint32 type, int state)
                 SDL_SetWindowsMessageHook(NULL, NULL);
             }
 #endif
-#if defined(SDL_PLATFORM_UNIX) && !defined(SDL_PLATFORM_ANDROID)
+#ifdef SDL2COMPAT_HAVE_X11
             SDL3_SetX11EventHook(NULL, NULL);
 #endif
         }
@@ -11471,7 +11579,12 @@ SDL_BuildAudioCVT(SDL_AudioCVT *cvt,
         }
 
         if (src_channels < dst_channels) {
-            cvt->len_mult = ((cvt->len_mult * dst_channels) + (src_channels - 1)) / src_channels;
+            const double mult = ((double)dst_channels / (double)src_channels);
+            cvt->len_mult *= (int)SDL_ceil(mult);
+            cvt->len_ratio *= mult;
+        } else {
+            const double divisor = ((double)src_channels / (double)dst_channels);
+            cvt->len_ratio /= divisor;
         }
 
         if (src_rate < dst_rate) {

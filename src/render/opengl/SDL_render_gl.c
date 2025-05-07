@@ -1796,7 +1796,7 @@ static bool GL_CreateRenderer(SDL_Renderer *renderer, SDL_Window *window, SDL_Pr
     SDL_AddSupportedTextureFormat(renderer, SDL_PIXELFORMAT_UYVY);
 #endif
 
-    if (1){ //SDL_GL_ExtensionSupported("GL_EXT_framebuffer_object")) {
+    if (SDL_GL_ExtensionSupported("GL_EXT_framebuffer_object")) {
         data->GL_EXT_framebuffer_object_supported = true;
         data->glGenFramebuffersEXT = (PFNGLGENFRAMEBUFFERSEXTPROC)
             SDL_GL_GetProcAddress("glGenFramebuffersEXT");
