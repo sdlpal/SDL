@@ -62,9 +62,12 @@ SVGA_GetVBEInfo(VBEInfo * info)
 }
 
 VBEMode
-SVGA_GetVBEModeAtIndex(const VBEInfo * info, int index)
+SVGA_GetVBEModeAtIndex(VBEInfo * info, int index)
 {
     VBEMode mode;
+
+    //! In practice (e.g., VirtualBox and NVIDIA VBE 3.0 VBIOS), the VBE mode is CONSTANTLY changing, so we need to retrieve it EVERYTIME
+    SVGA_GetVBEInfo(info);
 
     dosmemget(VBE_FLAT_PTR(info->video_mode_ptr) + index * sizeof(mode), sizeof(mode), &mode);
 
