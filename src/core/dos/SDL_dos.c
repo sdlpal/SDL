@@ -107,15 +107,15 @@ static const SDL_Scancode bios_to_sdl_scancode[128] = {
     SDL_SCANCODE_NUMLOCKCLEAR,
     SDL_SCANCODE_SCROLLLOCK,
     SDL_SCANCODE_KP_7,
-    SDL_SCANCODE_KP_8,
+    SDL_SCANCODE_UP,
     SDL_SCANCODE_KP_9,
     SDL_SCANCODE_KP_MINUS,
-    SDL_SCANCODE_KP_4,
+    SDL_SCANCODE_LEFT,
     SDL_SCANCODE_KP_5,
-    SDL_SCANCODE_KP_6,
+    SDL_SCANCODE_RIGHT,
     SDL_SCANCODE_KP_PLUS,
     SDL_SCANCODE_KP_1,
-    SDL_SCANCODE_KP_2,
+    SDL_SCANCODE_DOWN,
     SDL_SCANCODE_KP_3,
     SDL_SCANCODE_KP_0,
     SDL_SCANCODE_KP_PERIOD,
@@ -222,7 +222,7 @@ DOS_ProcessScancode(Uint8 scancode)
 
     /* Generate SDL key event. */
     if (extended_key) {
-        /* TODO: Handle extended keyboard scancodes. */
+        SDL_SendKeyboardKey(state, bios_to_sdl_scancode[scancode]);
     } else {
         SDL_SendKeyboardKey(state, bios_to_sdl_scancode[scancode]);
     }
