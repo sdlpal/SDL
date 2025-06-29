@@ -226,10 +226,10 @@ SVGA_VideoQuit(_THIS)
     SDL_DeviceData *devdata = _this->driverdata;
 
     /* Restore original video state. */
-    if (devdata->original_state) {
-        SVGA_SetState(devdata->original_state, devdata->state_size);
-        SDL_free(devdata->original_state);
-    }
+    //if (devdata->original_state) {
+    //    SVGA_SetState(devdata->original_state, devdata->state_size);
+    //    SDL_free(devdata->original_state);
+    //}
 
     /* Restore original video mode. */
     if (devdata->original_mode) {
