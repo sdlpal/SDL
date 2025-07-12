@@ -122,7 +122,8 @@ HDRS = \
 	SDL_video.h \
 	SDL_vulkan.h \
 	begin_code.h \
-	close_code.h
+	close_code.h \
+	vclock.h
 
 SDLTEST_HDRS = $(shell ls $(srcdir)/include | fgrep SDL_test)
 

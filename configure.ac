@@ -740,10 +740,21 @@ if test x$enable_assembly = xyes; then
 
     AC_MSG_CHECKING(for immintrin.h)
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <immintrin.h>]])],
-       [have_immintrin_h_hdr=yes],[have_immintrin_h_hdr=no])
+    [have_immintrin_h_hdr=yes],
+    [have_immintrin_h_hdr=no])
     AC_MSG_RESULT($have_immintrin_h_hdr)
+
+    # Check platform and disable macro if target is DJGPP
+    case "$host" in
+    *-*-msdosdjgpp*)
+        AC_MSG_NOTICE([Skipping HAVE_IMMINTRIN_H definition on DJGPP platform])
+        have_immintrin_h_hdr=no
+        ;;
+    esac
+
+    # Define macro only if header is present and not overridden
     if test x$have_immintrin_h_hdr = xyes; then
-        AC_DEFINE(HAVE_IMMINTRIN_H, 1, [ ])
+    AC_DEFINE(HAVE_IMMINTRIN_H, 1, [Define if immintrin.h is available])
     fi
 
     AC_ARG_ENABLE(altivec,

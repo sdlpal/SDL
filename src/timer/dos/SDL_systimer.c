@@ -26,6 +26,22 @@
 #include <dos.h>
 
 #include "SDL_timer.h"
+#include "vclock.h"
+
+#define USE_VCLOCK 1
+
+#if USE_VCLOCK
+#define uclock vclock
+#undef UCLOCKS_PER_SEC
+#define UCLOCKS_PER_SEC VCLOCKS_PER_SEC
+
+#define clock vclock
+#define clock_t vclock_t
+#undef CLOCKS_PER_SEC
+#define CLOCKS_PER_SEC VCLOCKS_PER_SEC
+
+#define delay vclock_delay
+#endif
 
 static clock_t start;
 static SDL_bool ticks_started = SDL_FALSE;
