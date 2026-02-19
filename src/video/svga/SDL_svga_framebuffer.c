@@ -26,8 +26,12 @@
 #include <sys/movedata.h>
 #include <sys/segments.h>
 
+#include <stdbool.h>
+
 #include "SDL_svga_video.h"
 #include "SDL_svga_framebuffer.h"
+
+bool svga_fb_setdisplaystart_verified = false;
 
 int
 SDL_SVGA_CreateFramebuffer(_THIS, SDL_Window * window, Uint32 * format, void ** pixels, int *pitch)
@@ -73,6 +77,9 @@ SDL_SVGA_CreateFramebuffer(_THIS, SDL_Window * window, Uint32 * format, void ** 
         return -1;
     }
 
+    /* detect if SVGA_SetDisplayStart is supported */
+    svga_fb_setdisplaystart_verified = false;//SVGA_SetDisplayStart(0, 0) == 0;
+
     /* Create a new surface. */
     SDL_GetWindowSize(window, &w, &h);
     surface = SDL_CreateRGBSurfaceWithFormat(0, w, h, 0, mode.format);
@@ -111,6 +118,11 @@ SDL_SVGA_UpdateFramebuffer(_THIS, SDL_Window * window, const SDL_Rect * rects, i
     }
 
     surface_size = surface->pitch * surface->h;
+
+    if( !svga_fb_setdisplaystart_verified ) {
+        movedata(_my_ds(), (Uint32)surface->pixels, windata->framebuffer_selector, 0, surface_size);
+        return 0;
+    }
 
     /* Flip the active page flag. */
     windata->framebuffer_page = !windata->framebuffer_page;

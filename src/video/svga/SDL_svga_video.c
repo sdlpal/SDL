@@ -156,6 +156,26 @@ SVGA_GetDisplayModes(_THIS, SDL_VideoDisplay * display)
             return;
         }
 
+        SDL_LogDebug(SDL_LOG_CATEGORY_VIDEO,
+            "SVGA: Mode 0x%X: %dx%d, bpp=%d, model=%d, pages=%d, pitch=%d, "
+            "attr=0x%X (hardware=%d, linear=%d), max_clock=%u Hz, "
+            "phys_base=0x%X:%X, offscreen_offset=0x%X, offscreen_size=%u KB, "
+            "lin_pitch=%d, lin_bpp_fields: R=%d/%d G=%d/%d B=%d/%d, "
+            "reserved[0]=0x%X",
+            vbe_mode, info.x_resolution, info.y_resolution,
+            info.bits_per_pixel, info.memory_model, info.number_of_image_pages,
+            info.bytes_per_scan_line, info.mode_attributes,
+            (info.mode_attributes & VBE_MODE_ATTR_HARDWARE_SUPPORT) != 0,
+            (info.mode_attributes & VBE_MODE_ATTR_LINEAR_MEM_AVAIL) != 0,
+            info.max_pixel_clock,
+            info.phys_base_ptr.segment, info.phys_base_ptr.offset,
+            info.off_screen_mem_offset, info.off_screen_mem_size,
+            info.lin_bytes_per_scan_line,
+            info.lin_red_mask_size, info.lin_red_field_position,
+            info.lin_green_mask_size, info.lin_green_field_position,
+            info.lin_blue_mask_size, info.lin_blue_field_position,
+            info.reserved_end[0]);  /* 可继续输出更多保留字节 */
+
         /* Mode must support graphics with a linear framebuffer. */
         if ((info.mode_attributes & VBE_MODE_ATTRS) != VBE_MODE_ATTRS) {
             SDL_LogDebug(SDL_LOG_CATEGORY_VIDEO, "SVGA: Ignoring mode 0x%X: Bad attributes", vbe_mode);
@@ -196,6 +216,8 @@ SVGA_GetDisplayModes(_THIS, SDL_VideoDisplay * display)
         if (!SDL_AddDisplayMode(display, &mode)) {
             SDL_free(modedata);
         }
+
+        SDL_LogDebug(SDL_LOG_CATEGORY_VIDEO, "SVGA: Added mode 0x%X: %dx%d, format=%s", vbe_mode, mode.w, mode.h, SDL_GetPixelFormatName(mode.format));
     }
 
     SDL_LogDebug(SDL_LOG_CATEGORY_VIDEO, "SVGA: VBE lists %d modes", index - 1);
