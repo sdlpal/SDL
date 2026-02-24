@@ -39,6 +39,7 @@ typedef struct
 {
     VBEMode vbe_mode;
     VBEFarPtr framebuffer_phys_addr;
+    int hardware_pitch;
 } SDL_DisplayModeData;
 
 typedef struct
@@ -46,6 +47,7 @@ typedef struct
     SDL_bool framebuffer_page;
     int framebuffer_selector;
     Uint32 framebuffer_linear_addr;
+    int hardware_pitch;
 } SDL_WindowData;
 
 #endif /* SDL_svga_video_h_ */

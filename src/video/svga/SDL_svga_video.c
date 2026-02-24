@@ -38,7 +38,7 @@
 #define SVGAVID_DRIVER_NAME "svga"
 
 /* Mandatory mode attributes */
-#define VBE_MODE_ATTRS (VBE_MODE_ATTR_GRAPHICS_MODE | VBE_MODE_ATTR_LINEAR_MEM_AVAIL)
+#define VBE_MODE_ATTRS (VBE_MODE_ATTR_HARDWARE_SUPPORT | VBE_MODE_ATTR_GRAPHICS_MODE | VBE_MODE_ATTR_LINEAR_MEM_AVAIL)
 
 /* Initialization/Query functions */
 static int SVGA_VideoInit(_THIS);
@@ -184,14 +184,14 @@ SVGA_GetDisplayModes(_THIS, SDL_VideoDisplay * display)
 
         /* Mode must be a known pixel format. */
         mode.format = SVGA_GetPixelFormat(&info);
-        if (mode.format == SDL_PIXELFORMAT_UNKNOWN) {
+        if (mode.format != SDL_PIXELFORMAT_RGB888 && mode.format != SDL_PIXELFORMAT_RGB565) {
             SDL_LogDebug(SDL_LOG_CATEGORY_VIDEO, "SVGA: Ignoring mode 0x%X: Bad pixel format", vbe_mode);
             continue;
         }
 
         /* Mode must be capable of double buffering. */
         if (!info.number_of_image_pages) {
-            SDL_LogDebug(SDL_LOG_CATEGORY_VIDEO, "SVGA: Ignoring mode 0x%X: No double-buffering", vbe_mode);
+            SDL_LogDebug(SDL_LOG_CATEGORY_VIDEO, "SVGA: Ignoring mode 0x%X: No double-buffering, num_image_pages=%d", vbe_mode, info.number_of_image_pages);
             continue;
         }
 
@@ -212,6 +212,8 @@ SVGA_GetDisplayModes(_THIS, SDL_VideoDisplay * display)
         mode.driverdata = modedata;
         modedata->vbe_mode = vbe_mode;
         modedata->framebuffer_phys_addr = info.phys_base_ptr;
+
+        modedata->hardware_pitch = info.bytes_per_scan_line;
 
         if (!SDL_AddDisplayMode(display, &mode)) {
             SDL_free(modedata);

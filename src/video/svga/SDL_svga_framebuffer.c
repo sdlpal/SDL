@@ -80,6 +80,9 @@ SDL_SVGA_CreateFramebuffer(_THIS, SDL_Window * window, Uint32 * format, void ** 
     /* detect if SVGA_SetDisplayStart is supported */
     svga_fb_setdisplaystart_verified = false;//SVGA_SetDisplayStart(0, 0) == 0;
 
+    /* Cache hardware pitch for faster access during updates. */
+    windata->hardware_pitch = modedata->hardware_pitch;
+
     /* Create a new surface. */
     SDL_GetWindowSize(window, &w, &h);
     surface = SDL_CreateRGBSurfaceWithFormat(0, w, h, 0, mode.format);
@@ -111,25 +114,34 @@ SDL_SVGA_UpdateFramebuffer(_THIS, SDL_Window * window, const SDL_Rect * rects, i
 {
     SDL_WindowData *windata = window->driverdata;
     SDL_Surface *surface = window->surface;
-    size_t surface_size;
+    int hardware_pitch;
+    int page_offset;
+    int y;
 
     if (!surface) {
         return SDL_SetError("Missing SVGA surface");
     }
 
-    surface_size = surface->pitch * surface->h;
+    /* Use cached hardware pitch for better performance. */
+    hardware_pitch = windata->hardware_pitch;
 
     if( !svga_fb_setdisplaystart_verified ) {
-        movedata(_my_ds(), (Uint32)surface->pixels, windata->framebuffer_selector, 0, surface_size);
+        for (y = 0; y < surface->h; y++) {
+            movedata(_my_ds(), (Uint32)surface->pixels + y * surface->pitch,
+                windata->framebuffer_selector, y * hardware_pitch, surface->pitch);
+        }
         return 0;
     }
 
     /* Flip the active page flag. */
     windata->framebuffer_page = !windata->framebuffer_page;
 
-    /* Copy pixels to hidden framebuffer page. */
-    movedata(_my_ds(), (Uint32)surface->pixels, windata->framebuffer_selector,
-        windata->framebuffer_page ? surface_size : 0, surface_size);
+    /* Copy pixels to hidden framebuffer page line by line. */
+    page_offset = windata->framebuffer_page ? (hardware_pitch * surface->h) : 0;
+    for (y = 0; y < surface->h; y++) {
+        movedata(_my_ds(), (Uint32)surface->pixels + y * surface->pitch, 
+            windata->framebuffer_selector, page_offset + y * hardware_pitch, surface->pitch);
+    }
 
     /* Display fresh page to screen. */
     SVGA_SetDisplayStart(0, windata->framebuffer_page ? surface->h : 0); 
