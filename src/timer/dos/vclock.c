@@ -26,14 +26,23 @@
     printf("[VCLOCK] " fmt "\n", ##__VA_ARGS__)
 #endif
 
-
-#define VCLOCK_DEFAULT_HZ 100
 // Runtime parameters
 static int vclock_hz = VCLOCK_DEFAULT_HZ;         // Default 100Hz
 static unsigned long vclock_pit_divisor = PIT_INPUT / VCLOCK_DEFAULT_HZ;
 static unsigned long vclocks_per_tick = VCLOCKS_PER_SEC / VCLOCK_DEFAULT_HZ;
 
+static int vclock_ready = 0;              // Fast-path init guard for non-ISR code
+static int vclock_lazy_init_called = 0;   // Enforce lazy_init one-shot behavior
+
 static void vclock_setup_pit(void);
+static void vclock_lazy_init(void);
+
+static inline void vclock_ensure_init(void) {
+    if (!vclock_ready && !vclock_lazy_init_called) {
+        vclock_lazy_init_called = 1;
+        vclock_lazy_init();
+    }
+}
 
 // Runtime clock setup
 void vclock_setup(int freq) {
@@ -41,7 +50,7 @@ void vclock_setup(int freq) {
     vclock_hz = freq;
     vclock_pit_divisor = PIT_INPUT / vclock_hz;
     vclocks_per_tick = VCLOCKS_PER_SEC / vclock_hz;
-    vclock_setup_pit();
+    vclock_ensure_init();
     VCLOCK_DEBUG_LOG("vclock_setup: hz=%d", vclock_hz);
 }
 
@@ -64,7 +73,7 @@ static int vhook_count = 0;       // Current number of active hooks
 static volatile vclock_t tick_acc = 0;   // Accumulated time in microseconds
 static volatile uint32_t tick_count = 0; // Number of ISR ticks since startup
 static volatile uint32_t irq_call_count = 0; // Debug: count of IRQ handler calls
-static int vclock_inited = 0;            // Whether module has been initialized
+static volatile int vclock_inited = 0;            // Whether module has been initialized
 
 static _go32_dpmi_seginfo old_irq0;            // Original IRQ0 handler to restore
 
@@ -88,8 +97,6 @@ static void vclock_irq0_handler(void)
             h->fn(h->userdata); // Invoke hook with its userdata
         }
     }
-    outportb(0x20, 0x20); // Send End-Of-Interrupt (EOI) to PIC
-    __asm__ __volatile__("int $0x1C"); // Trigger original BIOS clock chain
 }
 
 static int
@@ -117,6 +124,7 @@ static void vclock_uninstall(void)
     VCLOCK_DEBUG_LOG("[vclock] vclock_uninstall() called via atexit");
     if (!vclock_inited) return;
     vclock_inited = 0;
+    vclock_ready = 0;
 
     // Restore previous interrupt vector for IRQ0
     _go32_dpmi_set_protected_mode_interrupt_vector(IRQ0_VECTOR, &old_irq0);
@@ -144,6 +152,7 @@ static inline uint64_t vclock_usec_now(void) {
     return tick_acc;
 }
 
+
 /**
  * Initializes PIT and installs IRQ0 handler.
  * Automatically triggered the first time any clock function is used.
@@ -152,8 +161,11 @@ static void vclock_lazy_init(void)
 {
     _go32_dpmi_seginfo new_vector;
 
-    if( vclock_inited ) return; // Already initialized
-    vclock_inited = 1;
+    if (vclock_ready) return; // Already initialized (fast path)
+    if (vclock_inited) {
+        vclock_ready = 1;
+        return;
+    }
     vclock_setup_pit();
     tick_acc = 0;
     tick_count = 0;
@@ -168,17 +180,19 @@ static void vclock_lazy_init(void)
     VCLOCK_DEBUG_LOG("[vclock] IRQ0 vector got (sel=%x, addr=%lx)", (unsigned int)old_irq0.pm_selector, (unsigned long)old_irq0.pm_offset);
     if(vclock_lockisr() < 0) {
         VCLOCK_DEBUG_LOG("[vclock] Failed to lock VCLOCK ISR");
+        vclock_inited = 0;
+        vclock_ready = 0;
         return;
     }
-    if (_go32_dpmi_allocate_iret_wrapper(&new_vector)) {
-        VCLOCK_DEBUG_LOG("[vclock] Failed to wrap IRQ0 handler");
+    if (_go32_dpmi_chain_protected_mode_interrupt_vector(IRQ0_VECTOR, &new_vector)) {
+        VCLOCK_DEBUG_LOG("[vclock] Failed to install IRQ0 vector");
+        vclock_inited = 0;
+        vclock_ready = 0;
         return;
     }
-    if(_go32_dpmi_set_protected_mode_interrupt_vector(IRQ0_VECTOR, &new_vector)){
-        _go32_dpmi_free_iret_wrapper(&new_vector);
-        VCLOCK_DEBUG_LOG("[vclock] IRQ0 vector installed (sel=%x, addr=%lx)", (unsigned int)new_vector.pm_selector, (unsigned long)new_vector.pm_offset);
-        return;
-    }
+    vclock_inited = 1;
+    vclock_ready = 1;
+    VCLOCK_DEBUG_LOG("[vclock] IRQ0 vector installed (sel=%x, addr=%lx)", (unsigned int)new_vector.pm_selector, (unsigned long)new_vector.pm_offset);
     atexit(vclock_uninstall);
 }
 
@@ -187,7 +201,7 @@ static void vclock_lazy_init(void)
  */
 vclock_t vclock(void)
 {
-    vclock_lazy_init();
+    //vclock_ensure_init();
     return vclock_usec_now();
 }
 
@@ -199,11 +213,11 @@ void vclock_delay(uint32_t ms)
 {
     vclock_t target;
     int timeout_counter = 0;
-    vclock_lazy_init();
+    //vclock_ensure_init();
     target = tick_acc + ((vclock_t)ms * (VCLOCKS_PER_SEC / 1000UL));
     while (tick_acc < target && timeout_counter < (ms * 10000)) {
         asm volatile ("nop");
-        //__dpmi_yield();
+        __dpmi_yield();
         //delay(0);
     }
 }

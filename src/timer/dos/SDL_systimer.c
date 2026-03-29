@@ -50,6 +50,9 @@ void
 SDL_TicksInit(void)
 {
     if (ticks_started) {
+#if USE_VCLOCK
+        vclock_setup(VCLOCK_DEFAULT_HZ);
+#endif
         return;
     }
     start = clock();

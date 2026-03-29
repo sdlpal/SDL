@@ -12,6 +12,8 @@ typedef uint64_t vclock_t;
 extern "C" {
 #endif
 
+#define VCLOCK_DEFAULT_HZ 100
+
 /**
  * User-defined periodic hook function type.
  * Each hook receives a user-provided pointer on each invocation.
