@@ -156,6 +156,7 @@ extern VBEMode SVGA_GetVBEModeAtIndex(VBEInfo * info, int index);
 extern int SVGA_GetVBEModeInfo(VBEMode mode, VBEModeInfo * info);
 extern int SVGA_GetCurrentVBEMode(VBEMode * mode, VBEModeInfo * info);
 extern int SVGA_SetVBEMode(VBEMode mode);
+extern int SVGA_RestoreVBEMode(VBEMode mode);
 extern int SVGA_GetState(void **state);
 extern int SVGA_SetState(const void *state, size_t size);
 extern int SVGA_SetDisplayStart(int x, int y);

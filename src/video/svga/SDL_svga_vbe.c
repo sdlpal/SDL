@@ -113,13 +113,10 @@ SVGA_GetCurrentVBEMode(VBEMode * mode, VBEModeInfo * info)
     return SVGA_GetVBEModeInfo(*mode, info);
 }
 
-int
-SVGA_SetVBEMode(VBEMode mode)
+static int
+SVGA_SetModeInternal(VBEMode mode)
 {
     __dpmi_regs r;
-
-    mode &= 0x01FF; /* Mode number bit mask. */
-    mode |= 0x4000; /* Linear frame buffer flag. */
 
     r.x.ax = 0x4F02;
     r.x.bx = mode;
@@ -131,6 +128,21 @@ SVGA_SetVBEMode(VBEMode mode)
     RETURN_IF_VBE_CALL_FAILED(r);
 
     return 0;
+}
+
+int
+SVGA_SetVBEMode(VBEMode mode)
+{
+    mode &= 0x01FF; /* Mode number bit mask. */
+    mode |= 0x4000; /* Linear frame buffer flag. */
+
+    return SVGA_SetModeInternal(mode);
+}
+
+int
+SVGA_RestoreVBEMode(VBEMode mode)
+{
+    return SVGA_SetModeInternal(mode);
 }
 
 int
