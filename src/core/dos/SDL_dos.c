@@ -133,8 +133,18 @@ static void
 DOS_KeyboardISR(void)
 {
     /* Read scancodes from keyboard into buffer. */
-    while (inportb(PS2_STATUS) & 1 && scancode_count < SDL_arraysize(scancode_buf)) {
-        scancode_buf[scancode_count++] = inportb(PS2_DATA);
+    int status = inportb(PS2_STATUS);
+    if( status & 0x01 ) {
+        int scancode = inportb(PS2_DATA);
+        if( status & 0x20 ) {
+            SDL_LogWarn(SDL_LOG_CATEGORY_INPUT, "DOS: %02x its a mouse event! not a keyboard", scancode);
+        } else {
+            if (scancode_count < SDL_arraysize(scancode_buf)) {
+                scancode_buf[scancode_count++] = scancode;
+            }else{
+                SDL_LogWarn(SDL_LOG_CATEGORY_INPUT, "DOS: keyboard scancode buffer overflow, scancode lost %02x", scancode);
+            }
+        }
     }
 
     /* Acknowledge interrupt. */
