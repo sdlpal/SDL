@@ -254,16 +254,13 @@ static int keyevents_tail = 0;
 
 static void DOSVESA_DrainBIOSKeyboardBuffer(void)
 {
-    __dpmi_regs regs;
-    for (;;) {
-        regs.h.ah = 0x01; // BIOS: check for keystroke
-        __dpmi_int(0x16, &regs);
-        if (regs.x.flags & 0x40) { // ZF set = buffer empty
-            break;
-        }
-        regs.h.ah = 0x00; // BIOS: read keystroke (removes it)
-        __dpmi_int(0x16, &regs);
-    }
+    // Reset the BIOS keyboard buffer head pointer to match the tail,
+    // making the buffer appear empty. This avoids both int 0x16
+    // re-entrancy (old code) and accidentally consuming mouse data
+    // from port 0x60 (previous port-I/O attempt).
+    // BDA layout: 40:1A = buffer head (word), 40:1C = buffer tail (word)
+    const Uint16 tail = _farpeekw(_dos_ds, 0x41C);
+    _farpokew(_dos_ds, 0x41A, tail);
 }
 
 void DOSVESA_PumpEvents(SDL_VideoDevice *device)
@@ -336,10 +333,6 @@ void DOSVESA_PumpEvents(SDL_VideoDevice *device)
         }
     }
 
-    // We chain IRQ1 to BIOS, so drain its keyboard queue continuously to prevent
-    // BIOS buffer overflow beeps during long key autorepeat.
-    DOSVESA_DrainBIOSKeyboardBuffer();
-
     SDL_Mouse *mouse = SDL_GetMouse();
     if (mouse->internal) { // if non-NULL, there's a mouse detected on the system.
         __dpmi_regs regs;
@@ -374,6 +367,8 @@ static void KeyboardIRQHandler(void) // this is wrapped in a thing that handles 
 {
     keyevents_ringbuffer[keyevents_head] = inportb(KBD_DATA_PORT);
     keyevents_head = (keyevents_head + 1) & (SDL_arraysize(keyevents_ringbuffer) - 1);
+
+    DOSVESA_DrainBIOSKeyboardBuffer(); // drain BIOS buffer to prevent beeps on long autorepeat
     DOS_EndOfInterrupt(1);
 }
 static void KeyboardIRQHandler_End(void) {} // end-of-ISR label for memory locking
