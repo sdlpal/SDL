@@ -66,17 +66,30 @@
 extern "C" {
 #endif
 
-// This uses the "fat DS" trick to convert a physical address to a valid
-//  C pointer usable from protected mode.
+extern bool g_nearptr_enabled;
+
+SDL_FORCE_INLINE bool DOS_IsNearPtrEnabled(void)
+{
+    return g_nearptr_enabled;
+}
+
 SDL_FORCE_INLINE void *DOS_PhysicalToLinear(const Uint32 physical)
 {
-    __djgpp_nearptr_enable(); // We need to re-enable this for large applications to work.
-    return (void *)(physical + __djgpp_conventional_base);
+    if (g_nearptr_enabled) {
+        // nearptr works, use the fast path
+        __djgpp_nearptr_enable();
+        return (void *)(physical + __djgpp_conventional_base);
+    }
+    // nearptr not available: return NULL, caller must fall back to banked/dosmemput
+    return NULL;
 }
 
 SDL_FORCE_INLINE Uint32 DOS_LinearToPhysical(void *linear)
 {
-    return ((Uint32)linear) - __djgpp_conventional_base;
+    if (g_nearptr_enabled) {
+        return ((Uint32)linear) - __djgpp_conventional_base;
+    }
+    return 0; // cannot convert without nearptr
 }
 
 SDL_FORCE_INLINE int DOS_IRQToVector(int irq)

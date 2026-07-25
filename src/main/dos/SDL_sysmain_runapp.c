@@ -33,13 +33,15 @@ int _crt0_startup_flags = _CRT0_FLAG_LOCK_MEMORY | _CRT0_FLAG_NONMOVE_SBRK;
 
 int SDL_RunApp(int argc, char *argv[], SDL_main_func mainFunction, void *reserved)
 {
+    extern bool g_nearptr_enabled;
     (void)reserved;
     _crt0_startup_flags &= ~_CRT0_FLAG_LOCK_MEMORY; // don't lock further allocations by default...so data, code, and stack are locked but not buffers from future malloc() calls.
 
     if (!__djgpp_nearptr_enable()) {
-        fprintf(stderr, "__djgpp_nearptr_enable() failed!\n");
-        return 1;
-    }
+        SDL_LogDebug(SDL_LOG_CATEGORY_APPLICATION, "__djgpp_nearptr_enable() failed!\n");
+        g_nearptr_enabled = false;
+    }else
+        g_nearptr_enabled = true;
 
     return SDL_CallMainFunction(argc, argv, mainFunction);
 }
