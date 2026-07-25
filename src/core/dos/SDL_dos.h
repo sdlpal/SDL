@@ -66,7 +66,7 @@
 extern "C" {
 #endif
 
-extern bool g_nearptr_enabled;
+extern volatile bool g_nearptr_enabled;
 
 SDL_FORCE_INLINE bool DOS_IsNearPtrEnabled(void)
 {

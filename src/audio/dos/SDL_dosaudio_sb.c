@@ -95,6 +95,7 @@ static int isr_ring_mask = 0;         // ring_size - 1
 static int isr_chunk_size = 0;        // one DMA half-buffer, in bytes
 static Uint8 *isr_ring_buffer = NULL; // the ring itself (allocated and locked)
 static Uint8 *isr_dma_buffer = NULL;  // pointer to the DMA double-buffer
+static Uint32 isr_dma_phys = 0;       // physical address of the DMA double-buffer (used when nearptr disabled)
 static int isr_dma_halfdma = 0;       // half the DMA buffer size, in bytes
 static int isr_dma_channel = 0;
 static bool isr_is_16bit = false;
@@ -102,14 +103,23 @@ static Uint8 isr_silence_value = 0;
 
 // Copy `len` bytes from the ring buffer at position `pos` into `dst`,
 // handling the power-of-2 wrap. All pointers are memory-locked.
+// If nearptr is enabled, use SDL_memcpy; otherwise use far pointers.
 static void RingCopyOut(Uint8 *dst, int pos, int len)
 {
     const int mask = isr_ring_mask;
     const int start = pos & mask;
     const int first = (start + len <= isr_ring_size) ? len : (isr_ring_size - start);
-    SDL_memcpy(dst, isr_ring_buffer + start, first);
-    if (first < len) {
-        SDL_memcpy(dst + first, isr_ring_buffer, len - first);
+
+    if (g_nearptr_enabled) {
+        SDL_memcpy(dst, isr_ring_buffer + start, first);
+        if (first < len) {
+            SDL_memcpy(dst + first, isr_ring_buffer, len - first);
+        }
+    } else {
+        dosmemput(isr_ring_buffer + start, first, dst);
+        if (first < len) {
+            dosmemput(isr_ring_buffer, len - first, dst + first);
+        }
     }
 }
 static void RingCopyOut_End(void) {}
@@ -117,19 +127,26 @@ static void RingCopyOut_End(void) {}
 // Determine which DMA half-buffer the hardware is NOT currently playing
 // (i.e. the one we should fill). Uses ISR-cached statics so we don't
 // chase any heap pointers.
+// Returns a linear pointer if nearptr is enabled, otherwise a physical address.
 static Uint8 *ISR_GetDMAHalf(void)
 {
     int count;
+    int offset = 0;
     if (isr_is_16bit) {
         outportb(0xD8, 0x00);
         count = (int)inportb(0xC0 + (isr_dma_channel - 4) * 4 + 2);
         count += (int)inportb(0xC0 + (isr_dma_channel - 4) * 4 + 2) << 8;
-        return isr_dma_buffer + (count < (isr_dma_halfdma / 2) ? 0 : isr_dma_halfdma);
+        offset = (count < (isr_dma_halfdma / 2) ? 0 : isr_dma_halfdma);
     } else {
         outportb(0x0C, 0x00);
         count = (int)inportb(isr_dma_channel * 2 + 1);
         count += (int)inportb(isr_dma_channel * 2 + 1) << 8;
-        return isr_dma_buffer + (count < isr_dma_halfdma ? 0 : isr_dma_halfdma);
+        offset = (count < isr_dma_halfdma ? 0 : isr_dma_halfdma);
+    }
+    if (DOS_IsNearPtrEnabled()) {
+        return isr_dma_buffer + offset;
+    } else {
+        return (Uint8 *)(uintptr_t)(isr_dma_phys + offset);
     }
 }
 static void ISR_GetDMAHalf_End(void) {}
@@ -156,7 +173,14 @@ static void SoundBlasterIRQHandler(void)
         isr_ring_read += isr_chunk_size;
     } else {
         // Ring underrun: fill with silence so we don't replay stale audio.
-        SDL_memset(dma_dst, isr_silence_value, isr_chunk_size);
+        if (DOS_IsNearPtrEnabled()) {
+            SDL_memset(dma_dst, isr_silence_value, isr_chunk_size);
+        } else {
+            Uint32 phys_dst = (Uint32)(uintptr_t)dma_dst;
+            for (int i = 0; i < isr_chunk_size; i++) {
+                _farpokeb(_dos_ds, phys_dst + i, isr_silence_value);
+            }
+        }
     }
 }
 static void SoundBlasterIRQHandler_End(void) {}
@@ -185,6 +209,7 @@ static bool DOSSOUNDBLASTER_WaitDevice(SDL_AudioDevice *device)
 static bool DOSSOUNDBLASTER_OpenDevice(SDL_AudioDevice *device)
 {
     const bool is_sb16 = soundblaster_is_sb16;
+    const bool use_nearptr = DOS_IsNearPtrEnabled();
 
     if (is_sb16) {
         // SB16 (DSP >= 4): 16-bit stereo signed
@@ -250,10 +275,18 @@ static bool DOSSOUNDBLASTER_OpenDevice(SDL_AudioDevice *device)
     SDL_Log("SOUNDBLASTER: Allocated %d bytes of conventional memory at segment %d (ptr=%p)", (int)hidden->dma_buflen, (int)hidden->dma_seginfo.rm_segment, hidden->dma_buffer);
 
     // silence the DMA buffer to start
-    SDL_memset(hidden->dma_buffer, soundblaster_silence_value, hidden->dma_buflen);
+    Uint32 physical;
+    if (use_nearptr) {
+        physical = DOS_LinearToPhysical(hidden->dma_buffer);
+        SDL_memset(hidden->dma_buffer, soundblaster_silence_value, hidden->dma_buflen);
+    } else {
+        physical = hidden->dma_buffer;
+        for (int i = 0; i < hidden->dma_buflen; i++) {
+            _farpokeb(_dos_ds, physical + i, soundblaster_silence_value);
+        }
+    }
 
     // set up DMA controller.
-    const Uint32 physical = DOS_LinearToPhysical(hidden->dma_buffer);
     const Uint8 physical_page = (physical >> 16) & 0xFF;
 
     if (is_sb16) {
@@ -327,6 +360,7 @@ static bool DOSSOUNDBLASTER_OpenDevice(SDL_AudioDevice *device)
     isr_ring_mask = hidden->ring_size - 1;
     isr_chunk_size = hidden->chunk_size;
     isr_dma_buffer = hidden->dma_buffer;
+    isr_dma_phys = physical;
     isr_dma_halfdma = hidden->dma_buflen / 2;
     isr_dma_channel = hidden->dma_channel;
     isr_is_16bit = is_sb16;
@@ -344,6 +378,7 @@ static bool DOSSOUNDBLASTER_OpenDevice(SDL_AudioDevice *device)
     DOS_LockVariable(isr_chunk_size);
     DOS_LockVariable(isr_ring_buffer);
     DOS_LockVariable(isr_dma_buffer);
+    DOS_LockVariable(isr_dma_phys);
     DOS_LockVariable(isr_dma_halfdma);
     DOS_LockVariable(isr_dma_channel);
     DOS_LockVariable(isr_is_16bit);
@@ -496,6 +531,7 @@ static void DOSSOUNDBLASTER_CloseDevice(SDL_AudioDevice *device)
         isr_ring_mask = 0;
         isr_chunk_size = 0;
         isr_dma_buffer = NULL;
+        isr_dma_phys = 0;
         isr_dma_halfdma = 0;
         isr_irq_ack_port = 0;
 
