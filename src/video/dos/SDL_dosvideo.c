@@ -128,7 +128,7 @@ static bool DOSVESA_VideoInit(SDL_VideoDevice *device)
     SDL_VideoData *data = device->internal;
 
     if (!DOS_IsNearPtrEnabled()) {
-        fprintf(stderr, "DOSVESA: nearptr not available, forcing banked mode (no LFB)\n");
+        SDL_LogDebug(SDL_LOG_CATEGORY_VIDEO, "DOSVESA: nearptr not available, forcing banked mode (no LFB)\n");
         data->force_banked = true;
     }
 

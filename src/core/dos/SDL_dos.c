@@ -24,7 +24,7 @@
 
 #include "SDL_dos.h"
 
-bool g_nearptr_enabled = false;
+volatile bool g_nearptr_enabled = false;
 
 void *DOS_AllocateConventionalMemory(const int len, _go32_dpmi_seginfo *seginfo)
 {
@@ -38,6 +38,21 @@ void *DOS_AllocateConventionalMemory(const int len, _go32_dpmi_seginfo *seginfo)
     // virtual memory at all, so conventional memory is never paged out.
     return DOS_PhysicalToLinear(seginfo->rm_segment * 16);
 }
+void *DOS_AllocateConventionalMemory_ForDMA(const int len, _go32_dpmi_seginfo *seginfo)
+{
+    seginfo->size = (len + 15) / 16; // this is in "paragraphs"
+    if (_go32_dpmi_allocate_dos_memory(seginfo) != 0) {
+        SDL_OutOfMemory();
+        return NULL;
+    }
+    // No need to lock: DPMI 0.9 §3.3 guarantees the first megabyte is always
+    // committed and locked. CWSDPMI (the DJGPP DPMI host) doesn't support
+    // virtual memory at all, so conventional memory is never paged out.
+    if(g_nearptr_enabled)
+        return DOS_PhysicalToLinear(seginfo->rm_segment * 16);
+    else
+        return seginfo->rm_segment * 16;
+}
 
 void *DOS_AllocateDMAMemory(const int len, _go32_dpmi_seginfo *seginfo)
 {
@@ -47,7 +62,7 @@ void *DOS_AllocateDMAMemory(const int len, _go32_dpmi_seginfo *seginfo)
     // a boundary. This is the standard technique used by Allegro, MIDAS, and
     // every other DOS audio library; allocate-check-retry would add complexity
     // for zero benefit.
-    uint8_t *ptr = (uint8_t *)DOS_AllocateConventionalMemory(len * 2, seginfo);
+    uint8_t *ptr = (uint8_t *)DOS_AllocateConventionalMemory_ForDMA(len * 2, seginfo);
     if (!ptr) {
         return NULL;
     }
