@@ -588,6 +588,9 @@
     <ClInclude Include="..\..\src\events\SDL_events_c.h">
       <Filter>events</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\events\SDL_eventfilter_c.h">
+      <Filter>events</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\events\SDL_keyboard_c.h">
       <Filter>events</Filter>
     </ClInclude>
@@ -1483,6 +1486,9 @@
     <ClCompile Include="..\..\src\events\SDL_events.c">
       <Filter>events</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\events\SDL_eventfilter.c">
+      <Filter>events</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\events\SDL_keyboard.c">
       <Filter>events</Filter>
     </ClCompile>
@@ -2089,5 +2095,8 @@
     <ResourceCompile Include="..\..\src\core\windows\version.rc">
       <Filter>core\windows</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="..\..\src\stdlib\SDL_mslibc_x64.masm" />
   </ItemGroup>
 </Project>
