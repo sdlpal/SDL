@@ -127,13 +127,9 @@ static bool DOSVESA_VideoInit(SDL_VideoDevice *device)
 {
     SDL_VideoData *data = device->internal;
 
-    // Verify that the "fat DS" nearptr trick is active. Without it,
-    // DOS_PhysicalToLinear() produces garbage pointers and we crash.
-    // SDL_RunApp() enables this automatically; if the app defined
-    // SDL_MAIN_HANDLED it must call __djgpp_nearptr_enable() itself.
-    if (__djgpp_conventional_base == 0) {
-        return SDL_SetError("DOSVESA: __djgpp_nearptr_enable() was not called. "
-                            "Did you define SDL_MAIN_HANDLED without enabling the fat DS trick?");
+    if (!DOS_IsNearPtrEnabled()) {
+        fprintf(stderr, "DOSVESA: nearptr not available, forcing banked mode (no LFB)\n");
+        data->force_banked = true;
     }
 
     // We are probably in text mode at startup, so we don't have a real "desktop mode" atm.

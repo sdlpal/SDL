@@ -69,6 +69,8 @@ struct SDL_VideoData
     float mickeys_per_hpixel; // horizontal mickeys per pixel (default: 8)
     float mickeys_per_vpixel; // vertical mickeys per pixel (default: 16)
 
+    bool force_banked;        // if true, never use LFB even if available (for exam. NTVDM)
+
     // Page-flipping (double-buffering) state
     int current_page;         // 0 or 1: which page is currently displayed
     Uint32 page_offset[2];    // byte offset of each page within video memory

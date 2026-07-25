@@ -553,7 +553,7 @@ bool DOSVESA_SetDisplayMode(SDL_VideoDevice *device, SDL_VideoDisplay *sdl_displ
     const bool is_banked_usable = modedata->win_a_segment &&
                                   modedata->win_size > 0 &&
                                   (modedata->win_a_attributes & VBE_WINATTR_USABLE) == VBE_WINATTR_USABLE;
-    const bool use_lfb = modedata->has_lfb &&
+    const bool use_lfb = !data->force_banked && modedata->has_lfb &&
                          (!is_banked_usable || !SDL_GetHintBoolean(SDL_HINT_DOS_ALLOW_DIRECT_FRAMEBUFFER, false));
 
     regs.x.ax = 0x4F02;

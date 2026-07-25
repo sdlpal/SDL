@@ -227,6 +227,10 @@ static bool CreateNormalFramebuffer(SDL_VideoDevice *device, SDL_Window *window,
         // Point the LFB surface at the back page for tear-free double-buffering.
         int back_page = data->page_flip_available ? (1 - data->current_page) : 0;
         void *lfb_pixels = (Uint8 *)DOS_PhysicalToLinear(data->mapping.address) + data->page_offset[back_page];
+        if( !lfb_pixels ) {
+            data->banked_mode = true; // fallback to banked mode if nearptr not available
+            goto next;
+        }
         lfb_surface = SDL_CreateSurfaceFrom(mode->w, mode->h, surface_format, lfb_pixels, mdata->pitch);
         if (!lfb_surface) {
             SDL_DestroySurface(surface);
@@ -241,6 +245,7 @@ static bool CreateNormalFramebuffer(SDL_VideoDevice *device, SDL_Window *window,
         }
     }
 
+next:
     // clear the framebuffer completely, in case another window at a larger size was using this before us.
     if (lfb_surface) {
         SDL_ClearSurface(lfb_surface, 0.0f, 0.0f, 0.0f, 0.0f);

@@ -24,6 +24,8 @@
 
 #include "SDL_dos.h"
 
+bool g_nearptr_enabled = false;
+
 void *DOS_AllocateConventionalMemory(const int len, _go32_dpmi_seginfo *seginfo)
 {
     seginfo->size = (len + 15) / 16; // this is in "paragraphs"
