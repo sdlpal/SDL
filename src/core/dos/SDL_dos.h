@@ -68,6 +68,130 @@ extern "C" {
 
 extern volatile bool g_nearptr_enabled;
 
+/* ----------------------------------------------------------------------------
+   Basic far pointer read/write operations
+   ---------------------------------------------------------------------------- */
+#define DOS_PEEK8(phys)    _farpeekb(_dos_ds, (phys))
+#define DOS_PEEK16(phys)   _farpeekw(_dos_ds, (phys))
+#define DOS_PEEK32(phys)   _farpeekl(_dos_ds, (phys))
+
+#define DOS_POKE8(phys, val)   _farpokeb(_dos_ds, (phys), (val))
+#define DOS_POKE16(phys, val)  _farpokew(_dos_ds, (phys), (val))
+#define DOS_POKE32(phys, val)  _farpokel(_dos_ds, (phys), (val))
+
+/* ----------------------------------------------------------------------------
+   DOS_ZEROP(ptr) - zero-initialize a structure
+   ----------------------------------------------------------------------------
+   Interface identical to SDL_zerop(ptr).
+   In nearptr-disabled path, 'ptr' is interpreted as physical address.
+   ---------------------------------------------------------------------------- */
+#define DOS_ZEROP(ptr) do { \
+    if (g_nearptr_enabled) { \
+        SDL_zerop(ptr); \
+    } else { \
+        Uint32 _phys = (Uint32)(ptr); \
+        for (int _i = 0; _i < (int)sizeof(*(ptr)); _i++) { \
+            _farpokeb(_dos_ds, _phys + _i, 0); \
+        } \
+    } \
+} while (0)
+
+/* ----------------------------------------------------------------------------
+   DOS_MEMCPY(dst, src, n) - copy n bytes from src to dst
+   ----------------------------------------------------------------------------
+   Interface identical to SDL_memcpy(dst, src, n).
+   In nearptr-disabled path, 'dst' is interpreted as physical address.
+   'src' must be a linear address (can be a string literal or heap pointer).
+   ---------------------------------------------------------------------------- */
+#define DOS_MEMCPY(dst, src, n) do { \
+    if (g_nearptr_enabled) { \
+        SDL_memcpy(dst, src, n); \
+    } else { \
+        Uint32 _phys = (Uint32)(dst); \
+        const Uint8 *_src = (const Uint8 *)(src); \
+        for (int _i = 0; _i < (int)(n); _i++) { \
+            _farpokeb(_dos_ds, _phys + _i, _src[_i]); \
+        } \
+    } \
+} while (0)
+
+/* ----------------------------------------------------------------------------
+   DOS_MEMCMP(ptr1, ptr2, n) - compare n bytes between ptr1 and ptr2
+   ----------------------------------------------------------------------------
+   Interface identical to SDL_memcmp(ptr1, ptr2, n).
+   In nearptr-disabled path, 'ptr1' is interpreted as physical address.
+   'ptr2' must be a linear address.
+   Returns 0 if equal, non-zero otherwise (same semantics as memcmp).
+   ---------------------------------------------------------------------------- */
+#define DOS_MEMCMP(ptr1, ptr2, n) \
+    (g_nearptr_enabled ? \
+     SDL_memcmp(ptr1, ptr2, n) : \
+     ({ \
+         Uint32 _phys = (Uint32)(ptr1); \
+         const Uint8 *_src = (const Uint8 *)(ptr2); \
+         int _res = 0; \
+         for (int _i = 0; _i < (int)(n); _i++) { \
+             Uint8 _b = _farpeekb(_dos_ds, _phys + _i); \
+             if (_b != _src[_i]) { _res = _b - _src[_i]; break; } \
+         } \
+         _res; \
+     }))
+#define DOS_MEMSET(ptr, val, n) do { \
+    if (g_nearptr_enabled) { \
+        SDL_memset(ptr, val, n); \
+    } else { \
+        Uint32 _phys = (Uint32)(ptr); \
+        for (int _i = 0; _i < (int)(n); _i++) { \
+            _farpokeb(_dos_ds, _phys + _i, (Uint8)(val)); \
+        } \
+    } \
+} while (0)
+#define DOS_READ8(ptr, field) \
+    (g_nearptr_enabled ? \
+     (Uint8)((ptr)->field) : \
+     DOS_PEEK8((Uint32)(ptr) + offsetof(typeof(*(ptr)), field)))
+/* ----------------------------------------------------------------------------
+   DOS_READ16(ptr, field) - read a 16-bit field from a structure
+   ----------------------------------------------------------------------------
+   Reads 'field' from structure at 'ptr'.
+   Interface: DOS_READ16(hwinfo, VESAVersion)
+   In nearptr-disabled path, 'ptr' is interpreted as physical address.
+   ---------------------------------------------------------------------------- */
+#define DOS_READ16(ptr, field) \
+    (g_nearptr_enabled ? \
+     (Uint16)((ptr)->field) : \
+     DOS_PEEK16((Uint32)(ptr) + offsetof(typeof(*(ptr)), field)))
+
+/* ----------------------------------------------------------------------------
+   DOS_READ32(ptr, field) - read a 32-bit field from a structure
+   ---------------------------------------------------------------------------- */
+#define DOS_READ32(ptr, field) \
+    (g_nearptr_enabled ? \
+     (Uint32)((ptr)->field) : \
+     DOS_PEEK32((Uint32)(ptr) + offsetof(typeof(*(ptr)), field)))
+
+/* ----------------------------------------------------------------------------
+   DOS_WRITE16(ptr, field, val) - write a 16-bit field to a structure
+   ---------------------------------------------------------------------------- */
+#define DOS_WRITE16(ptr, field, val) do { \
+    if (g_nearptr_enabled) { \
+        (ptr)->field = (val); \
+    } else { \
+        DOS_POKE16((Uint32)(ptr) + offsetof(typeof(*(ptr)), field), (val)); \
+    } \
+} while (0)
+
+/* ----------------------------------------------------------------------------
+   DOS_WRITE32(ptr, field, val) - write a 32-bit field to a structure
+   ---------------------------------------------------------------------------- */
+#define DOS_WRITE32(ptr, field, val) do { \
+    if (g_nearptr_enabled) { \
+        (ptr)->field = (val); \
+    } else { \
+        DOS_POKE32((Uint32)(ptr) + offsetof(typeof(*(ptr)), field), (val)); \
+    } \
+} while (0)
+
 SDL_FORCE_INLINE bool DOS_IsNearPtrEnabled(void)
 {
     return g_nearptr_enabled;
@@ -80,8 +204,7 @@ SDL_FORCE_INLINE void *DOS_PhysicalToLinear(const Uint32 physical)
         __djgpp_nearptr_enable();
         return (void *)(physical + __djgpp_conventional_base);
     }
-    // nearptr not available: return NULL, caller must fall back to banked/dosmemput
-    return NULL;
+    return (void *)physical;
 }
 
 SDL_FORCE_INLINE Uint32 DOS_LinearToPhysical(void *linear)
@@ -89,7 +212,7 @@ SDL_FORCE_INLINE Uint32 DOS_LinearToPhysical(void *linear)
     if (g_nearptr_enabled) {
         return ((Uint32)linear) - __djgpp_conventional_base;
     }
-    return 0; // cannot convert without nearptr
+    return (Uint32)linear;
 }
 
 SDL_FORCE_INLINE int DOS_IRQToVector(int irq)

@@ -162,8 +162,8 @@ static const SDL_VESAInfo *GetVESAInfo(void)
         return NULL;
     }
 
-    SDL_zerop(hwinfo);
-    SDL_memcpy(hwinfo->VESASignature, "VBE2", 4);
+    DOS_ZEROP(hwinfo);
+    DOS_MEMCPY(hwinfo->VESASignature, "VBE2", 4);
 
     __dpmi_regs regs;
     regs.x.ax = 0x4F00;
@@ -173,20 +173,20 @@ static const SDL_VESAInfo *GetVESAInfo(void)
 
     // al is 0x4F if VESA is supported, ah is 0x00 if this specific call succeeded.
     // If the interrupt call didn't replace VESASignature with "VESA" then something went wrong, too.
-    if ((regs.x.ax != 0x004F) || (SDL_memcmp(hwinfo->VESASignature, "VESA", 4) != 0)) {
+    if ((regs.x.ax != 0x004F) || (DOS_MEMCMP(hwinfo->VESASignature, "VESA", 4) != 0)) {
         SDL_SetError("VESA video not supported on this system");
     } else {
         vesa_info = (SDL_VESAInfo *)SDL_calloc(1, sizeof(*vesa_info));
         if (vesa_info) {
-            vesa_info->version = hwinfo->VESAVersion;
-            vesa_info->total_memory = ((Uint32)hwinfo->TotalMemory) * (64 * 1024); // TotalMemory is 64k chunks, convert to bytes.
-            vesa_info->video_addr_segoffset = hwinfo->VideoModePtr;
-            vesa_info->oem_software_revision = hwinfo->OEMSoftwareRev;
+            vesa_info->version = DOS_READ16(hwinfo, VESAVersion);;
+            vesa_info->total_memory = ((Uint32)DOS_READ16(hwinfo, TotalMemory)) * (64 * 1024); // TotalMemory is 64k chunks, convert to bytes.
+            vesa_info->video_addr_segoffset = DOS_READ32(hwinfo, VideoModePtr);
+            vesa_info->oem_software_revision = DOS_READ16(hwinfo, OEMSoftwareRev);
             // these strings are often empty (or maybe NULL), but it's fine. We don't _actually_ need them.
-            vesa_info->oem_string = DOS_GetFarPtrCString(hwinfo->OEMStringPtr);
-            vesa_info->oem_vendor = DOS_GetFarPtrCString(hwinfo->OEMVendorNamePtr);
-            vesa_info->oem_product = DOS_GetFarPtrCString(hwinfo->OEMProductNamePtr);
-            vesa_info->oem_revision = DOS_GetFarPtrCString(hwinfo->OEMProductRevPtr);
+            vesa_info->oem_string = DOS_GetFarPtrCString(DOS_READ32(hwinfo, OEMStringPtr));
+            vesa_info->oem_vendor = DOS_GetFarPtrCString(DOS_READ32(hwinfo, OEMVendorNamePtr));
+            vesa_info->oem_product = DOS_GetFarPtrCString(DOS_READ32(hwinfo, OEMProductNamePtr));
+            vesa_info->oem_revision = DOS_GetFarPtrCString(DOS_READ32(hwinfo, OEMProductRevPtr));
 
             // Copy the mode list out of conventional memory BEFORE freeing
             // the VBE info block. Some VESA BIOSes store the mode list
@@ -278,7 +278,7 @@ static bool GetVESAModeInfo(Uint16 mode_id, SDL_DisplayModeData *info)
         return false;
     }
 
-    SDL_zerop(hwinfo);
+    DOS_ZEROP(hwinfo);
 
     __dpmi_regs regs;
     regs.x.ax = 0x4F01;
@@ -291,29 +291,29 @@ static bool GetVESAModeInfo(Uint16 mode_id, SDL_DisplayModeData *info)
     if (retval) {
         SDL_zerop(info);
         info->mode_id = mode_id;
-        info->attributes = hwinfo->ModeAttributes;
-        info->pitch = hwinfo->BytesPerScanLine;
-        info->w = hwinfo->XResolution;
-        info->h = hwinfo->YResolution;
-        info->num_planes = hwinfo->NumberOfPlanes;
-        info->bpp = hwinfo->BitsPerPixel;
-        info->memory_model = hwinfo->MemoryModel;
-        info->num_image_pages = hwinfo->NumberOfImagePages;
-        info->red_mask_size = hwinfo->RedMaskSize;
-        info->red_mask_pos = hwinfo->RedMaskPos;
-        info->green_mask_size = hwinfo->GreenMaskSize;
-        info->green_mask_pos = hwinfo->GreenMaskPos;
-        info->blue_mask_size = hwinfo->BlueMaskSize;
-        info->blue_mask_pos = hwinfo->BlueMaskPos;
-        info->physical_base_addr = hwinfo->PhysBasePtr;
+        info->attributes = DOS_READ16(hwinfo, ModeAttributes);
+        info->pitch = DOS_READ16(hwinfo, BytesPerScanLine);
+        info->w = DOS_READ16(hwinfo, XResolution);
+        info->h = DOS_READ16(hwinfo, YResolution);
+        info->num_planes = DOS_READ8(hwinfo, NumberOfPlanes);
+        info->bpp = DOS_READ8(hwinfo, BitsPerPixel);
+        info->memory_model = DOS_READ8(hwinfo, MemoryModel);
+        info->num_image_pages = DOS_READ8(hwinfo, NumberOfImagePages);
+        info->red_mask_size = DOS_READ8(hwinfo, RedMaskSize);
+        info->red_mask_pos = DOS_READ8(hwinfo, RedMaskPos);
+        info->green_mask_size = DOS_READ8(hwinfo, GreenMaskSize);
+        info->green_mask_pos = DOS_READ8(hwinfo, GreenMaskPos);
+        info->blue_mask_size = DOS_READ8(hwinfo, BlueMaskSize);
+        info->blue_mask_pos = DOS_READ8(hwinfo, BlueMaskPos);
+        info->physical_base_addr = DOS_READ32(hwinfo, PhysBasePtr);
 
         // VBE 1.2 banked framebuffer fields
-        info->has_lfb = (hwinfo->ModeAttributes & VBE_MODEATTR_LFB) != 0;
-        info->win_granularity = hwinfo->WinGranularity;
-        info->win_size = hwinfo->WinSize;
-        info->win_a_segment = hwinfo->WinASegment;
-        info->win_func_ptr = hwinfo->WinFuncPtr;
-        info->win_a_attributes = hwinfo->WinAAttributes;
+        info->has_lfb = (DOS_READ16(hwinfo, ModeAttributes) & VBE_MODEATTR_LFB) != 0;
+        info->win_granularity = DOS_READ16(hwinfo, WinGranularity);
+        info->win_size = DOS_READ16(hwinfo, WinSize);
+        info->win_a_segment = DOS_READ16(hwinfo, WinASegment);
+        info->win_func_ptr = DOS_READ32(hwinfo, WinFuncPtr);
+        info->win_a_attributes = DOS_READ8(hwinfo, WinAAttributes);
     }
 
     DOS_FreeConventionalMemory(&hwinfo_seginfo);
