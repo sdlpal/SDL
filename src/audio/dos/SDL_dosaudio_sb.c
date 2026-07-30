@@ -116,9 +116,9 @@ static void RingCopyOut(Uint8 *dst, int pos, int len)
             SDL_memcpy(dst + first, isr_ring_buffer, len - first);
         }
     } else {
-        dosmemput(isr_ring_buffer + start, first, dst);
+        dosmemput(isr_ring_buffer + start, first, (unsigned long)dst);
         if (first < len) {
-            dosmemput(isr_ring_buffer, len - first, dst + first);
+            dosmemput(isr_ring_buffer, len - first, (unsigned long)(dst + first));
         }
     }
 }
@@ -280,7 +280,7 @@ static bool DOSSOUNDBLASTER_OpenDevice(SDL_AudioDevice *device)
         physical = DOS_LinearToPhysical(hidden->dma_buffer);
         SDL_memset(hidden->dma_buffer, soundblaster_silence_value, hidden->dma_buflen);
     } else {
-        physical = hidden->dma_buffer;
+        physical = (Uint32)hidden->dma_buffer;
         for (int i = 0; i < hidden->dma_buflen; i++) {
             _farpokeb(_dos_ds, physical + i, soundblaster_silence_value);
         }
