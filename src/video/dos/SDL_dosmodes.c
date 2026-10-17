@@ -548,13 +548,8 @@ bool DOSVESA_SetDisplayMode(SDL_VideoDevice *device, SDL_VideoDisplay *sdl_displ
         return true;
     }
 
-    // When the direct-FB hint is active, prefer banked mode. This needs
-    // to be set explicitly for some cards (Intel 740).
-    const bool is_banked_usable = modedata->win_a_segment &&
-                                  modedata->win_size > 0 &&
-                                  (modedata->win_a_attributes & VBE_WINATTR_USABLE) == VBE_WINATTR_USABLE;
-    const bool use_lfb = !data->force_banked && modedata->has_lfb &&
-                         (!is_banked_usable || !SDL_GetHintBoolean(SDL_HINT_DOS_ALLOW_DIRECT_FRAMEBUFFER, false));
+    // prefer LFB mode for performance
+    const bool use_lfb = !data->force_banked && modedata->has_lfb;
 
     regs.x.ax = 0x4F02;
     regs.x.bx = modedata->mode_id | (use_lfb ? VBE_SETMODE_LFB : 0);
@@ -632,12 +627,11 @@ bool DOSVESA_SetDisplayMode(SDL_VideoDevice *device, SDL_VideoDisplay *sdl_displ
 
     SDL_copyp(&data->current_mode, mode);
 
-    // Set up page-flipping if the mode has at least 1 image page (meaning 2 total)
-    // Note: page-flipping is only supported with LFB modes. With banked modes,
-    // we would still need to bank-switch through the same 64KB window to write
-    // to the back page, so the performance benefit is minimal (just tear-free).
-    // For simplicity, disable page-flipping in banked mode for now.
-    if (!data->banked_mode && modedata->num_image_pages >= 1) {
+    // Disable page-flipping globally.
+    // NVIDIA cards mis-report support for the VESA VBE "Set/Get Display Start"
+    // function (Function 07h) required for page flipping. 
+    // see https://www.vogons.org/viewtopic.php?f=63&t=57420
+    if (0) {
         data->page_flip_available = true;
         data->current_page = 0;
         data->page_offset[0] = 0;

@@ -310,17 +310,15 @@ bool DOSVESA_CreateWindowFramebuffer(SDL_VideoDevice *device, SDL_Window *window
             fb_state.fb_size = (Uint32)vram_pitch * mdata->h;
             fb_state.pitches_match = (surface->pitch == vram_pitch);
 
-            // Prefer dosmemput via the banked VGA window (0xA0000). Real
-            // hardware testing shows dosmemput is significantly faster
-            // than nearptr writes to DPMI-mapped LFB, even with bank
-            // switching overhead at higher resolutions.
-            //
-            // The banked window always maps to page 0, so page flipping is
-            // not possible through this path. We accept tearing: the app
-            // opted into the direct-FB hint for maximum throughput, and
-            // games like Quake never used page flipping for their software
-            // renderers anyway.
-            if (mdata->win_a_segment && mdata->win_size > 0 &&
+            // Prefer LFB for performance
+            if (!data->banked_mode && data->mapping.size) {
+                // Fallback: nearptr to LFB.
+                int back_page = data->page_flip_available ? (1 - data->current_page) : 0;
+                fb_state.vram_ptr = (Uint8 *)DOS_PhysicalToLinear(data->mapping.address) + data->page_offset[back_page];
+                fb_state.vram_phys = 0;
+                fb_state.use_dosmemput = false;
+                fb_state.banked_multibank = false;
+            } else if (mdata->win_a_segment && mdata->win_size > 0 &&
                 (mdata->win_a_attributes & VBE_WINATTR_USABLE) == VBE_WINATTR_USABLE) {
                 Uint32 win_bytes = (Uint32)mdata->win_size * 1024;
                 fb_state.use_dosmemput = true;
@@ -331,13 +329,6 @@ bool DOSVESA_CreateWindowFramebuffer(SDL_VideoDevice *device, SDL_Window *window
                 fb_state.win_size_bytes = win_bytes;
                 fb_state.win_func_ptr = mdata->win_func_ptr;
                 fb_state.banked_multibank = (fb_state.fb_size > win_bytes);
-            } else if (!data->banked_mode && data->mapping.size) {
-                // Fallback: nearptr to LFB.
-                int back_page = data->page_flip_available ? (1 - data->current_page) : 0;
-                fb_state.vram_ptr = (Uint8 *)DOS_PhysicalToLinear(data->mapping.address) + data->page_offset[back_page];
-                fb_state.vram_phys = 0;
-                fb_state.use_dosmemput = false;
-                fb_state.banked_multibank = false;
             } else {
                 // No usable VRAM path. Shouldn't happen, but bail out.
                 SDL_DestroySurface(surface);
